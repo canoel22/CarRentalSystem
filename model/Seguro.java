@@ -1,6 +1,11 @@
 package model;
 
-public class Seguro {
+import java.io.Serializable;
+
+public class Seguro implements Serializable{
+	
+	private static final long serialVersionUID = 7796372954156733114L;
+	
 	private final String descricao;
 	private final int percentualTarifa;
 	

@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import controller.CatalogoController;
 import controller.MainController;
 import model.EStatusVeiculo;
+import javax.swing.SwingConstants;
 
 public class CadastroVeiculoView extends JFrame {
 
@@ -31,11 +32,16 @@ public class CadastroVeiculoView extends JFrame {
 
 	private JTabbedPane tabbedPane;
 
-	private JPanel listPane; // Painel de Listagem
+	private JPanel listPane1; // Painel de Listagem por modelo
 
 	private JComboBox<String> modelosList;
 	private JTextArea textAreaList;
 
+	private JPanel listPane2; // Painel de Listagem por categoria
+
+	private JComboBox<String> categoriasList;
+	private JTextArea textAreaList2;
+	
 	private JPanel formPane; // Painel do Formulario
 
 	private JTextField txtPlaca;
@@ -44,6 +50,8 @@ public class CadastroVeiculoView extends JFrame {
 	private JTextField txtQuilometragem;
 	private JComboBox<EStatusVeiculo> cbbStatusVeiculo;
 	private JComboBox<String> cbbModeloVeiculo;
+	private JComboBox<String> cbbCategoriaVeiculo;
+	private JLabel lblFiltroPorCategoria;
 
 	public CadastroVeiculoView() {
 		initialize();
@@ -64,21 +72,43 @@ public class CadastroVeiculoView extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 
-		listPane = new JPanel();
 		formPane = new JPanel();
+		listPane1 = new JPanel();
+		listPane2 = new JPanel();
 
-		initListPane();
 		initFormPane();
+		initListPane1();
+		initListPane2();
 
-		tabbedPane.add("Listagem", listPane);
+		tabbedPane.add("Listagem", listPane1);
+		
+		tabbedPane.add("Listagem", listPane2);
+		
+		lblFiltroPorCategoria = new JLabel("Filtro por categoria");
+		lblFiltroPorCategoria.setBounds(12, 0, 150, 15);
+		listPane2.add(lblFiltroPorCategoria);
+		
+		JLabel lblNewLabel = new JLabel("Filtro por modelo");
+		lblNewLabel.setBounds(6, 0, 150, 15);
+		listPane1.add(lblNewLabel);
 		tabbedPane.add("Cadastro", formPane);
+		
+		JLabel lblCategoria = new JLabel("Categoria");
+		lblCategoria.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCategoria.setBounds(12, 66, 130, 16);
+		formPane.add(lblCategoria);
+		
+		JLabel lblModelo = new JLabel("Modelo");
+		lblModelo.setHorizontalAlignment(SwingConstants.LEFT);
+		lblModelo.setBounds(12, 100, 130, 16);
+		formPane.add(lblModelo);
 	}
 
-	private void initListPane() {
+	private void initListPane1() {
 
 		CatalogoController controller = MainController.getCatalogoController();
 
-		listPane.setLayout(null);
+		listPane1.setLayout(null);
 
 		modelosList = new JComboBox<String>(new Vector<String>(controller.getModelos()));
 
@@ -89,17 +119,45 @@ public class CadastroVeiculoView extends JFrame {
 
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actionListar();
+				actionListar1();
 			}
 		});
 
 		textAreaList = new JTextArea();
 		textAreaList.setBounds(12, 60, 320, 193);
 
-		listPane.add(modelosList);
-		listPane.add(textAreaList);
+		listPane1.add(modelosList);
+		listPane1.add(textAreaList);
 
-		listPane.add(btnListar);
+		listPane1.add(btnListar);
+	}
+
+	private void initListPane2() {
+
+		CatalogoController controller = MainController.getCatalogoController();
+
+		listPane2.setLayout(null);
+
+		categoriasList = new JComboBox<String>(new Vector<String>(controller.getCategorias()));
+
+		categoriasList.setBounds(6, 21, 330, 27);
+
+		JButton btnListar = new JButton("Listar");
+		btnListar.setBounds(346, 20, 109, 29);
+
+		btnListar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionListar2();
+			}
+		});
+
+		textAreaList2 = new JTextArea();
+		textAreaList2.setBounds(12, 60, 320, 193);
+
+		listPane2.add(categoriasList);
+		listPane2.add(textAreaList2);
+
+		listPane2.add(btnListar);
 	}
 
 	private void initFormPane() {
@@ -109,45 +167,45 @@ public class CadastroVeiculoView extends JFrame {
 		formPane.setLayout(null);
 
 		JLabel lblPlaca = new JLabel("Placa");
-		lblPlaca.setBounds(17, 22, 61, 16);
+		lblPlaca.setBounds(17, 4, 61, 16);
 
 		JLabel lblAnoFabricacao = new JLabel("Ano Fabricação");
-		lblAnoFabricacao.setBounds(17, 50, 130, 16);
+		lblAnoFabricacao.setBounds(12, 33, 130, 16);
 
 		JLabel lblCor = new JLabel("Cor");
-		lblCor.setBounds(17, 155, 71, 16);
+		lblCor.setBounds(12, 130, 71, 16);
 
 		JLabel lblStatus = new JLabel("Status");
-		lblStatus.setBounds(17, 192, 61, 16);
+		lblStatus.setBounds(12, 199, 61, 16);
 
 		JLabel lblQuilometragem = new JLabel("Quilometragem");
-		lblQuilometragem.setBounds(17, 117, 130, 16);
-
-		JLabel lblModelo = new JLabel("Modelo");
-		lblModelo.setBounds(17, 83, 61, 16);
+		lblQuilometragem.setBounds(12, 166, 130, 16);
 
 		txtPlaca = new JTextField();
-		txtPlaca.setBounds(134, 18, 130, 26);
+		txtPlaca.setBounds(134, 0, 130, 26);
 		txtPlaca.setColumns(10);
 
 		txtAnoFabricacao = new JTextField();
-		txtAnoFabricacao.setBounds(134, 46, 86, 26);
+		txtAnoFabricacao.setBounds(134, 29, 86, 26);
 		txtAnoFabricacao.setColumns(10);
 
 		txtCor = new JTextField();
-		txtCor.setBounds(134, 151, 86, 26);
+		txtCor.setBounds(134, 126, 86, 26);
 		txtCor.setColumns(10);
 
 		txtQuilometragem = new JTextField();
-		txtQuilometragem.setBounds(134, 113, 86, 26);
+		txtQuilometragem.setBounds(134, 162, 86, 26);
 		txtQuilometragem.setColumns(10);
 
 		cbbStatusVeiculo = new JComboBox<>();
-		cbbStatusVeiculo.setBounds(134, 187, 130, 27);
+		cbbStatusVeiculo.setBounds(134, 194, 130, 27);
 		cbbStatusVeiculo.setModel(new DefaultComboBoxModel<EStatusVeiculo>(EStatusVeiculo.values()));
 
 		cbbModeloVeiculo = new JComboBox<String>(new Vector<String>(controller.getModelos()));
-		cbbModeloVeiculo.setBounds(133, 78, 216, 27);
+		cbbModeloVeiculo.setBounds(134, 94, 216, 27);
+		
+		cbbCategoriaVeiculo = new JComboBox<String>(new Vector<String>(controller.getCategorias()));
+		cbbCategoriaVeiculo.setBounds(133, 60, 216, 27);
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(101, 233, 117, 29);
@@ -178,9 +236,9 @@ public class CadastroVeiculoView extends JFrame {
 
 		formPane.add(lblStatus);
 		formPane.add(cbbStatusVeiculo);
-
-		formPane.add(lblModelo);
+		
 		formPane.add(cbbModeloVeiculo);
+		formPane.add(cbbCategoriaVeiculo);
 
 		formPane.add(lblQuilometragem);
 		formPane.add(txtQuilometragem);
@@ -204,12 +262,14 @@ public class CadastroVeiculoView extends JFrame {
 			int quilometragem = Integer.parseInt(txtQuilometragem.getText());
 
 			String modeloVeiculo = (String) cbbModeloVeiculo.getSelectedItem();
+			
+			String categoriaVeiculo = (String) cbbCategoriaVeiculo.getSelectedItem();
 
-			controller.addVeiculo(placa, anoFabricacao, cor, statusVeiculo, quilometragem, modeloVeiculo);
+			controller.addVeiculo(placa, anoFabricacao, cor, statusVeiculo, quilometragem, modeloVeiculo, categoriaVeiculo);
 
 		} catch (NumberFormatException e) {
 
-			JOptionPane.showMessageDialog(this, "Formato campo codigo: 0\nFormato campo preço: 0.00");
+			JOptionPane.showMessageDialog(this, "Tipo inserido inválido!");
 			return;
 
 		} catch (Exception e) {
@@ -220,18 +280,33 @@ public class CadastroVeiculoView extends JFrame {
 
 	}
 
-	private void actionListar() {
+	private void actionListar1() {
 
 		CatalogoController controller = MainController.getCatalogoController();
 
-		String nomeCategoria = (String) modelosList.getSelectedItem();
+		String nomeModelo = (String) modelosList.getSelectedItem();
 
-		List<String> lista = controller.getVeiculos(nomeCategoria);
+		List<String> lista = controller.getVeiculos(nomeModelo);
 
 		textAreaList.setText(null);
 
-		for (String strItem : lista) {
-			textAreaList.append(String.format("%s\n", strItem));
+		for (String strVeiculo : lista) {
+			textAreaList.append(String.format("%s\n", strVeiculo));
+		}
+	}
+	
+	private void actionListar2() {
+
+		CatalogoController controller = MainController.getCatalogoController();
+
+		String nomeCategoria = (String) categoriasList.getSelectedItem();
+
+		List<String> lista = controller.getVeiculosCat(nomeCategoria);
+
+		textAreaList2.setText(null);
+
+		for (String strVeiculo : lista) {
+			textAreaList2.append(String.format("%s\n", strVeiculo));
 		}
 	}
 

@@ -48,17 +48,17 @@ public class CadastroCategoriaView extends JFrame {
 		setContentPane(contentPane);
 
 		lblNome = new JLabel("Nome:");
-		lblNome.setBounds(6, 0, 61, 16);
+		lblNome.setBounds(6, 16, 61, 16);
 
 		txtNome = new JTextField();
-		txtNome.setBounds(85, 0, 213, 26);
+		txtNome.setBounds(85, 12, 213, 26);
 		txtNome.setColumns(20);
 
 		lblTarifaDiaria = new JLabel("Tarifa Diária:");
-		lblTarifaDiaria.setBounds(6, 30, 176, 16);
+		lblTarifaDiaria.setBounds(6, 47, 176, 16);
 
 		txtTarifaDiaria = new JTextField();
-		txtTarifaDiaria.setBounds(105, 30, 193, 26);
+		txtTarifaDiaria.setBounds(105, 43, 193, 26);
 		txtTarifaDiaria.setColumns(20);
 
 		btnSalvar = new JButton("Salvar");

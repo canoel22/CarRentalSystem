@@ -42,17 +42,17 @@ public class MenuView extends JFrame {
 		G1 = new ButtonGroup();
 
 		jRadioButton = new JRadioButton();
-		jRadioButton.setText("Catálogo veículos");
+		jRadioButton.setText("Cadastro Seguros");
 		jRadioButton.setBounds(100, 60, 300, 21);
 		this.add(jRadioButton);
 
 		jRadioButton1 = new JRadioButton();
-		jRadioButton1.setText("Cadastro Cliente");
+		jRadioButton1.setText("Cadastro Clientes");
 		jRadioButton1.setBounds(100, 80, 300, 21);
 		this.add(jRadioButton1);
 
 		jRadioButton2 = new JRadioButton();
-		jRadioButton2.setText("Cadastro Veículo");
+		jRadioButton2.setText("Cadastro e catálogo de Veículos");
 		jRadioButton2.setBounds(100, 100, 300, 21);
 		this.add(jRadioButton2);
 
@@ -129,8 +129,8 @@ public class MenuView extends JFrame {
 	private void actionContinuar() {
 
 		if (jRadioButton.isSelected()) {
-			//CatalogoVeiculoView catalogoVeiculoView = new CatalogoVeiculoView();
-			//catalogoVeiculoView.setVisible(true);
+			CadastroSeguroView cadastroSeguroView = new CadastroSeguroView();
+			cadastroSeguroView.setVisible(true);
 
 		} else if (jRadioButton1.isSelected()) {
 			//CadastroClienteView cadastroClienteView = new CadastroClienteView();

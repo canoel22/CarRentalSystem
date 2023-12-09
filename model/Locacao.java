@@ -11,6 +11,7 @@ public class Locacao {
 	
 	private PessoaFisica condutor;
 	private ArrayList<Pagamento> pagamentos = new ArrayList<Pagamento>();
+	private Veiculo veiculo;
 	
 	public PessoaFisica getCondutor() {
 		return condutor;
@@ -56,6 +57,14 @@ public class Locacao {
 
 	public long getKmRetirada() {
 		return kmRetirada;
+	}
+
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
 	}
 
 }

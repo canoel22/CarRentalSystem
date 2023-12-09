@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Modelo implements Serializable {
 
@@ -9,6 +10,8 @@ public class Modelo implements Serializable {
 	private final String nome;
 	private final int anoModelo;
 	private final String fabricante;
+	
+	private ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
 	
 	
 	public Modelo(String nome, int anoModelo, String fabricante) {
@@ -27,6 +30,18 @@ public class Modelo implements Serializable {
 
 	public String getFabricante() {
 		return fabricante;
+	}
+
+	public ArrayList<Veiculo> getVeiculos() {
+		return veiculos;
+	}
+
+	public void setVeiculos(ArrayList<Veiculo> veiculos) {
+		this.veiculos = veiculos;
+	}
+	
+	public void addVeiculo (Veiculo veiculo) {
+		veiculos.add(veiculo);
 	}
 	
 	

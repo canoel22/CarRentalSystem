@@ -1,8 +1,10 @@
 package model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Veiculo {
+public class Veiculo implements Serializable {
+
+	private static final long serialVersionUID = 924528742543802098L;
 
 	private final String placa;
 	private final String cor;
@@ -11,7 +13,6 @@ public class Veiculo {
 	private int quilometragem;
 
 	private final Modelo modelo;
-	private ArrayList<Locacao> locacoes = new ArrayList<Locacao>();
 
 	public Veiculo(String placa, String cor, int anoFabricacao, Modelo modelo) {
 		this.placa = placa;
@@ -23,15 +24,15 @@ public class Veiculo {
 	public int getQuilometragem() {
 		return quilometragem;
 	}
-	
+
 	public void setQuilometragem(int quilometragem) {
 		this.quilometragem = quilometragem;
 	}
-	
+
 	public Modelo getModelo() {
 		return modelo;
 	}
-	
+
 	public EStatusVeiculo getStatus() {
 		return status;
 	}

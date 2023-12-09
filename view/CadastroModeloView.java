@@ -48,28 +48,28 @@ public class CadastroModeloView extends JFrame {
 		lblNome.setBounds(6, 0, 61, 16);
 
 		txtNome = new JTextField();
-		txtNome.setBounds(52, 0, 294, 26);
+		txtNome.setBounds(85, 0, 213, 26);
 		txtNome.setColumns(20);
 		
 
 		lblanoModelo = new JLabel("Ano do modelo:");
-		lblanoModelo.setBounds(6, 30, 61, 16);
+		lblanoModelo.setBounds(6, 30, 176, 16);
 
 		txtanoModelo = new JTextField();
-		txtanoModelo.setBounds(52, 30, 294, 26);
+		txtanoModelo.setBounds(122, 30, 176, 26);
 		txtanoModelo.setColumns(20);
 		
 		
 		lblFabricante = new JLabel("Fabricante:");
-		lblFabricante.setBounds(6, 60, 61, 16);
+		lblFabricante.setBounds(6, 60, 117, 16);
 
 		txtFabricante = new JTextField();
-		txtFabricante.setBounds(52, 60, 294, 26);
+		txtFabricante.setBounds(98, 60, 200, 26);
 		txtFabricante.setColumns(20);
 		
 		
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(360, 16, 117, 29);
+		btnSalvar.setBounds(310, 24, 117, 29);
 
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -81,7 +81,7 @@ public class CadastroModeloView extends JFrame {
 		textArea.setBounds(6, 100, 344, 167);
 
 		btnListar = new JButton("Listar");
-		btnListar.setBounds(360, 57, 117, 29);
+		btnListar.setBounds(310, 54, 117, 29);
 
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

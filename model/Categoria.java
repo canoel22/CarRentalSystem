@@ -1,9 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;	
 
-public class Categoria {
+public class Categoria implements Serializable{
 
+	private static final long serialVersionUID = 2047187435370298060L;
+	
 	private final String nome;
 	private double tarifaDiaria;
 	
@@ -13,8 +16,9 @@ public class Categoria {
 	
 
 
-	public Categoria(String nome) {
+	public Categoria(String nome, double tarifaDiaria) {
 		this.nome = nome;
+		this.tarifaDiaria = tarifaDiaria;
 	}
 
 

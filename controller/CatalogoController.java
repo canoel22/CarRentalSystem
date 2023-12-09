@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import model.EStatusVeiculo;
 import model.Modelo;
 import model.Veiculo;
+import model.Categoria;
 
 public class CatalogoController implements Serializable {
 
@@ -17,11 +18,13 @@ public class CatalogoController implements Serializable {
 
 	private Map<String, Modelo> modelos;
 	private Map<String, Veiculo> veiculos;
+	private Map<String, Categoria> categorias;
 
 	public CatalogoController() {
 
 		modelos = new TreeMap<>();
 		veiculos = new TreeMap<>();
+		categorias = new TreeMap<>();
 	}
 
 	public void addModelo(String nome, int anoModelo, String fabricante) {
@@ -31,6 +34,23 @@ public class CatalogoController implements Serializable {
 
 	public Set<String> getModelos() {
 		return modelos.keySet(); // retorna lista das chaves do map modelos
+	}
+	
+	public void addCategoria(String nome, double tarifaDiaria) {
+		if (categorias == null) {
+			categorias = new TreeMap<>();
+		}else {
+		categorias.put(nome, new Categoria(nome, tarifaDiaria)); // insere novo objeto categoria no map modelos
+		MainController.save();
+		}
+	}
+
+	public Set<String> getCategorias() {
+		if (categorias == null) {
+			categorias = new TreeMap<>();
+		}
+		return categorias.keySet(); // retorna lista das chaves do map categorias
+		
 	}
 
 	public void addVeiculo(String placa, int anoFabricacao, String cor, EStatusVeiculo statusVeiculo, int quilometragem,

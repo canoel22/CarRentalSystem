@@ -224,7 +224,7 @@ public class CadastroVeiculoView extends JFrame {
 
 		CatalogoController controller = MainController.getCatalogoController();
 
-		String nomeCategoria = (String) cbbModeloVeiculo.getSelectedItem();
+		String nomeCategoria = (String) modelosList.getSelectedItem();
 
 		List<String> lista = controller.getVeiculos(nomeCategoria);
 

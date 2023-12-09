@@ -71,6 +71,8 @@ public class CatalogoController implements Serializable {
 	public List<String> getVeiculos(String nomeModelo) {
 
 		Modelo modelo = modelos.get(nomeModelo);
+		
+		System.out.printf("%s", modelo.getNome());
 
 		List<String> lista = new ArrayList<>();
 

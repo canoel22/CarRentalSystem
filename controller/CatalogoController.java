@@ -21,6 +21,7 @@ public class CatalogoController implements Serializable {
 	public CatalogoController() {
 
 		modelos = new TreeMap<>();
+		veiculos = new TreeMap<>();
 	}
 
 	public void addModelo(String nome, int anoModelo, String fabricante) {
@@ -34,6 +35,10 @@ public class CatalogoController implements Serializable {
 
 	public void addVeiculo(String placa, int anoFabricacao, String cor, EStatusVeiculo statusVeiculo, int quilometragem,
 			String modelo) {
+		
+		if (veiculos == null) {
+			veiculos = new TreeMap<>();
+		}else {
 
 		Modelo modelo1 = modelos.get(modelo); // retorna objeto Modelo para chave do map
 
@@ -48,6 +53,7 @@ public class CatalogoController implements Serializable {
 			modelo1.addVeiculo(veiculo);
 
 		MainController.save();
+		}
 	}
 
 	public List<String> getVeiculos() {

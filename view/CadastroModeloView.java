@@ -11,7 +11,7 @@ import controller.MainController;
 
 public class CadastroModeloView extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5301962579021810221L;
 
 	private JPanel contentPane;
 

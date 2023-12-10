@@ -68,7 +68,15 @@ public class Categoria implements Serializable{
 		veiculos.add(veiculo);
 	}
 	
-	public void removeVeiculo (Veiculo veiculo) {
+	public void removeVeiculo (Seguro seguro) {
+		seguros.remove(seguro);
+	}
+	
+	public void addSeguro(Seguro seguro) {
+		seguros.add(seguro);
+	}
+	
+	public void removeSeguro (Veiculo veiculo) {
 		veiculos.remove(veiculo);
 	}
 	

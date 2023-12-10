@@ -17,12 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.CatalogoController;
 import controller.MainController;
 import model.EStatusVeiculo;
-import javax.swing.SwingConstants;
 
 public class CadastroVeiculoView extends JFrame {
 
@@ -41,7 +41,7 @@ public class CadastroVeiculoView extends JFrame {
 
 	private JComboBox<String> categoriasList;
 	private JTextArea textAreaList2;
-	
+
 	private JPanel formPane; // Painel do Formulario
 
 	private JTextField txtPlaca;
@@ -81,23 +81,23 @@ public class CadastroVeiculoView extends JFrame {
 		initListPane2();
 
 		tabbedPane.add("Listagem", listPane1);
-		
+
 		tabbedPane.add("Listagem", listPane2);
-		
+
 		lblFiltroPorCategoria = new JLabel("Filtro por categoria");
 		lblFiltroPorCategoria.setBounds(12, 0, 150, 15);
 		listPane2.add(lblFiltroPorCategoria);
-		
+
 		JLabel lblNewLabel = new JLabel("Filtro por modelo");
 		lblNewLabel.setBounds(6, 0, 150, 15);
 		listPane1.add(lblNewLabel);
 		tabbedPane.add("Cadastro", formPane);
-		
+
 		JLabel lblCategoria = new JLabel("Categoria");
 		lblCategoria.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCategoria.setBounds(12, 66, 130, 16);
 		formPane.add(lblCategoria);
-		
+
 		JLabel lblModelo = new JLabel("Modelo");
 		lblModelo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblModelo.setBounds(12, 100, 130, 16);
@@ -203,7 +203,7 @@ public class CadastroVeiculoView extends JFrame {
 
 		cbbModeloVeiculo = new JComboBox<String>(new Vector<String>(controller.getModelos()));
 		cbbModeloVeiculo.setBounds(134, 94, 216, 27);
-		
+
 		cbbCategoriaVeiculo = new JComboBox<String>(new Vector<String>(controller.getCategorias()));
 		cbbCategoriaVeiculo.setBounds(133, 60, 216, 27);
 
@@ -236,7 +236,7 @@ public class CadastroVeiculoView extends JFrame {
 
 		formPane.add(lblStatus);
 		formPane.add(cbbStatusVeiculo);
-		
+
 		formPane.add(cbbModeloVeiculo);
 		formPane.add(cbbCategoriaVeiculo);
 
@@ -262,10 +262,11 @@ public class CadastroVeiculoView extends JFrame {
 			int quilometragem = Integer.parseInt(txtQuilometragem.getText());
 
 			String modeloVeiculo = (String) cbbModeloVeiculo.getSelectedItem();
-			
+
 			String categoriaVeiculo = (String) cbbCategoriaVeiculo.getSelectedItem();
 
-			controller.addVeiculo(placa, anoFabricacao, cor, statusVeiculo, quilometragem, modeloVeiculo, categoriaVeiculo);
+			controller.addVeiculo(placa, anoFabricacao, cor, statusVeiculo, quilometragem, modeloVeiculo,
+					categoriaVeiculo);
 
 		} catch (NumberFormatException e) {
 
@@ -286,7 +287,7 @@ public class CadastroVeiculoView extends JFrame {
 
 		String nomeModelo = (String) modelosList.getSelectedItem();
 
-		List<String> lista = controller.getVeiculos(nomeModelo);
+		List<String> lista = controller.getVeiculosMod(nomeModelo);
 
 		textAreaList.setText(null);
 
@@ -294,7 +295,7 @@ public class CadastroVeiculoView extends JFrame {
 			textAreaList.append(String.format("%s\n", strVeiculo));
 		}
 	}
-	
+
 	private void actionListar2() {
 
 		CatalogoController controller = MainController.getCatalogoController();

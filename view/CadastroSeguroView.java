@@ -3,17 +3,19 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.CatalogoController;
@@ -24,7 +26,7 @@ public class CadastroSeguroView extends JFrame {
 	private static final long serialVersionUID = 1615480617627032734L;
 
 	private JPanel contentPane;
-	
+
 	private JTabbedPane tabbedPane;
 
 	private JPanel listPane; // Painel de Listagem por categoria
@@ -32,20 +34,19 @@ public class CadastroSeguroView extends JFrame {
 	private JComboBox<String> categoriasList;
 	private JTextArea textAreaList;
 	private JLabel lblFiltroPorCategoria;
-	
+
 	private JPanel formPane; // Painel de cadastro
 
 	private JTextField txtDescricao;
 	private JTextField txtPercentualTarifa;
-	private JTextArea textArea;
-	private JComboBox<String> cbbCategoriaVeiculo;
+	private JComboBox<String> cbbCategoria;
 
 	public CadastroSeguroView() {
 		initialize();
 	}
 
 	private void initialize() {
-		setTitle("Veículo");
+		setTitle("Seguros");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 440, 338);
@@ -66,13 +67,14 @@ public class CadastroSeguroView extends JFrame {
 		initListPane();
 
 		tabbedPane.add("Listagem", listPane);
-		
+
 		lblFiltroPorCategoria = new JLabel("Filtro por categoria");
 		lblFiltroPorCategoria.setBounds(12, 0, 150, 15);
 		listPane.add(lblFiltroPorCategoria);
-		
+
+		tabbedPane.add("Cadastro", formPane);
 	}
-	
+
 	private void initListPane() {
 
 		CatalogoController controller = MainController.getCatalogoController();
@@ -100,66 +102,89 @@ public class CadastroSeguroView extends JFrame {
 
 		listPane.add(btnListar);
 	}
-	
-	
-	private void initFormPane() {
 
+	private void initFormPane() {
 
 		CatalogoController controller = MainController.getCatalogoController();
 
 		formPane.setLayout(null);
 
 		JLabel lblDescricao = new JLabel("Descrição");
-		lblDescricao.setBounds(17, 4, 61, 16);
+		lblDescricao.setBounds(12, 20, 107, 16);
 
 		JLabel lblPercentualTarifa = new JLabel("Percentual tarifa");
-		lblPercentualTarifa.setBounds(12, 33, 130, 16);
-		
-		cbbCategoriaVeiculo = new JComboBox<String>(new Vector<String>(controller.getCategorias()));
-		cbbCategoriaVeiculo.setBounds(134, 94, 216, 27);
-		
+		lblPercentualTarifa.setBounds(22, 58, 130, 16);
+
+		JLabel lblCategoria = new JLabel("Categoria do Veículo");
+		lblCategoria.setBounds(12, 99, 208, 16);
+
+		txtDescricao = new JTextField();
+		txtDescricao.setBounds(164, 16, 130, 26);
+		txtDescricao.setColumns(10);
+
+		txtPercentualTarifa = new JTextField();
+		txtPercentualTarifa.setBounds(165, 54, 86, 26);
+		txtPercentualTarifa.setColumns(10);
+
+		cbbCategoria = new JComboBox<String>(new Vector<String>(controller.getCategorias()));
+		cbbCategoria.setBounds(163, 94, 216, 27);
+
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(101, 233, 117, 29);
+		btnSalvar.setBounds(77, 152, 117, 29);
 
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionSalvar();
-		
+
 			}
 		});
 
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(218, 233, 117, 29);
+		btnCancelar.setBounds(194, 152, 117, 29);
 
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionCancelar();
 			}
 		});
-		
+
 		formPane.add(lblDescricao);
 		formPane.add(txtDescricao);
 
 		formPane.add(lblPercentualTarifa);
 		formPane.add(txtPercentualTarifa);
-		
-		formPane.add(lblCategoriaVeiculo);
-		formPane.add(cbbCategoriaVeiculo);
+
+		formPane.add(lblCategoria);
+		formPane.add(cbbCategoria);
+
+		formPane.add(btnSalvar);
+		formPane.add(btnCancelar);
 
 	}
 
 	private void actionSalvar() {
 		CatalogoController controller = MainController.getCatalogoController();
 
-		String descricao = txtDescricao.getText();
-		String percentualTarifaStr = txtPercentualTarifa.getText();
-		int percentualTarifa = Integer.parseInt(percentualTarifaStr);
+		try {
+			String descricao = txtDescricao.getText();
 
-		controller.addSeguro(descricao, percentualTarifa);
+			String percentualTarifaStr = txtPercentualTarifa.getText();
+			int percentualTarifa = Integer.parseInt(percentualTarifaStr);
+
+			String categoria = (String) cbbCategoria.getSelectedItem();
+
+			controller.addSeguro(descricao, percentualTarifa, categoria);
+
+		} catch (NumberFormatException e) {
+
+			JOptionPane.showMessageDialog(this, "Tipo inserido inválido!");
+			return;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		limparForm();
-
-		actionListar();
 
 	}
 
@@ -167,14 +192,23 @@ public class CadastroSeguroView extends JFrame {
 
 		CatalogoController controller = MainController.getCatalogoController();
 
-		textArea.setText(null);
-		for (String descricao : controller.getSeguros()) {
-			textArea.append(String.format("%s\n", descricao));
+		String nomeCategoria = (String) categoriasList.getSelectedItem();
+
+		List<String> lista = controller.getSegurosCat(nomeCategoria);
+
+		textAreaList.setText(null);
+
+		for (String strSeguro : lista) {
+			textAreaList.append(String.format("%s\n", strSeguro));
 		}
 	}
 
 	private void limparForm() {
 		txtDescricao.setText("");
 		txtPercentualTarifa.setText("");
+	}
+
+	private void actionCancelar() {
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 }

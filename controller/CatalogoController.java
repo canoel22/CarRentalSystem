@@ -55,11 +55,20 @@ public class CatalogoController implements Serializable {
 
 	}
 
-	public void addSeguro(String descricao, int percentualTarifa) {
+	public void addSeguro(String descricao, int percentualTarifa, String categoria) {
 		if (seguros == null) {
 			seguros = new TreeMap<>();
 		}
-		seguros.put(descricao, new Seguro(descricao, percentualTarifa)); // insere novo objeto categoria no map seguros
+
+		Categoria categoria1 = categorias.get(categoria); // retorna objeto Categoria para chave do map
+
+		Seguro seguro = new Seguro(descricao, percentualTarifa);
+
+		seguros.put(seguro.getDescricao(), seguro);
+
+		if (categoria1 != null)
+			categoria1.addSeguro(seguro);
+		
 		MainController.save();
 	}
 
@@ -69,6 +78,19 @@ public class CatalogoController implements Serializable {
 		}
 		return seguros.keySet(); // retorna lista das chaves do map categorias
 
+	}
+	
+	public List<String> getSegurosCat(String nomeCategoria) {
+		Categoria categoria = categorias.get(nomeCategoria);
+
+		System.out.printf("%s", categoria.getNome());
+
+		List<String> lista = new ArrayList<>();
+
+		for (Seguro seguro : categoria.getSeguros())
+			lista.add(String.format("%s\t%s\t", seguro.getDescricao(), seguro.getPercentualTarifa()));
+
+		return lista;
 	}
 
 	public void addVeiculo(String placa, int anoFabricacao, String cor, EStatusVeiculo statusVeiculo, int quilometragem,
@@ -80,7 +102,7 @@ public class CatalogoController implements Serializable {
 
 		Modelo modelo1 = modelos.get(modelo); // retorna objeto Modelo para chave do map
 
-		Categoria categoria1 = categorias.get(categoria); // retorna objeto Modelo para chave do map
+		Categoria categoria1 = categorias.get(categoria); // retorna objeto Categoria para chave do map
 
 		Veiculo veiculo = new Veiculo(placa, cor, anoFabricacao, modelo1);
 		veiculo.setQuilometragem(quilometragem);
@@ -110,7 +132,7 @@ public class CatalogoController implements Serializable {
 		return lista;
 	}
 
-	public List<String> getVeiculos(String nomeModelo) {
+	public List<String> getVeiculosMod(String nomeModelo) {
 
 		Modelo modelo = modelos.get(nomeModelo);
 

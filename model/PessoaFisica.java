@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class PessoaFisica extends Cliente{
+	
+	private static final long serialVersionUID = -6949786183798229303L;
+	
 	private final long cpf;
 	private  long numCNH;
 	private Date validadeCNH;

@@ -24,7 +24,7 @@ import controller.CatalogoController;
 import controller.MainController;
 import model.EStatusVeiculo;
 
-public class CadastroVeiculoView extends JFrame {
+public class VeiculoView extends JFrame {
 
 	private static final long serialVersionUID = 7008206866340731712L;
 
@@ -53,7 +53,7 @@ public class CadastroVeiculoView extends JFrame {
 	private JComboBox<String> cbbCategoriaVeiculo;
 	private JLabel lblFiltroPorCategoria;
 
-	public CadastroVeiculoView() {
+	public VeiculoView() {
 		initialize();
 	}
 

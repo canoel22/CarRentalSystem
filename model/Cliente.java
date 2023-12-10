@@ -1,8 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Cliente {
+public abstract class Cliente implements Serializable {
+	
+	private static final long serialVersionUID = 4275623360457068349L;
+	
 	private String nome;	
 	private String email;
 	private long telefone;

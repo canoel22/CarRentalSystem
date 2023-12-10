@@ -49,7 +49,7 @@ public class CadastroSeguroView extends JFrame {
 		setTitle("Seguros");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 440, 338);
+		setBounds(100, 100, 440, 338);		
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -133,8 +133,8 @@ public class MenuView extends JFrame {
 			cadastroSeguroView.setVisible(true);
 
 		} else if (jRadioButton1.isSelected()) {
-			//CadastroClienteView cadastroClienteView = new CadastroClienteView();
-			//cadastroClienteView.setVisible(true);
+			ClienteView clienteView = new ClienteView();
+			clienteView.setVisible(true);
 
 		} else if (jRadioButton2.isSelected()) {
 			VeiculoView cadastroVeiculoView = new VeiculoView();

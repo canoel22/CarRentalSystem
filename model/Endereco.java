@@ -8,6 +8,14 @@ public class Endereco {
 	private String cidade;
 	private String complemento;
 	
+	public Endereco(String rua, int numero, String bairro, String cidade, String complemento) {
+		rua = this.rua;
+		numero = this.numero;
+		bairro = this.bairro;
+		cidade = this.cidade;
+		complemento = this.complemento;
+	}
+	
 	
 	public String getRua() {
 		return rua;

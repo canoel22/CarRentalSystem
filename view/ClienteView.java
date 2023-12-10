@@ -1,10 +1,12 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,11 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.ClienteController;
 import controller.MainController;
-import javax.swing.SwingConstants;
 
 public class ClienteView extends JFrame {
 
@@ -87,8 +89,6 @@ public class ClienteView extends JFrame {
 
 	private void initListPane() {
 
-		ClienteController controller = MainController.getClienteController();
-
 		listPane.setLayout(null);
 
 		JButton btnListar = new JButton("Listar");
@@ -96,7 +96,7 @@ public class ClienteView extends JFrame {
 
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actionListar();
+				actionListar1();
 			}
 		});
 
@@ -116,25 +116,25 @@ public class ClienteView extends JFrame {
 
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setBounds(12, 36, 107, 16);
-		
+
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(12, 66, 130, 16);		
-	
+		lblEmail.setBounds(12, 66, 130, 16);
+
 		JLabel lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(0, 98, 208, 16);
-		
+
 		JLabel lblRua = new JLabel("Rua");
 		lblRua.setBounds(220, 14, 208, 16);
-		
+
 		JLabel lblNumero = new JLabel("Numero");
 		lblNumero.setBounds(220, 40, 208, 16);
-		
+
 		JLabel lblBairro = new JLabel("Bairro");
 		lblBairro.setBounds(220, 66, 208, 16);
-		
+
 		JLabel lblCidade = new JLabel("Cidade");
 		lblCidade.setBounds(220, 95, 208, 16);
-		
+
 		JLabel lblComplemento = new JLabel("Complemento");
 		lblComplemento.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblComplemento.setBounds(176, 123, 208, 16);
@@ -142,7 +142,8 @@ public class ClienteView extends JFrame {
 		JLabel lblTipoUsuario = new JLabel("Tipo de Usuário:");
 		lblTipoUsuario.setBounds(36, 163, 208, 16);
 
-		JLabel lblCPF = new JLabel("CPF:");;
+		JLabel lblCPF = new JLabel("CPF:");
+		;
 		lblCPF.setBounds(80, 204, 208, 16);
 
 		JLabel lblCNH = new JLabel("Número CNH:");
@@ -151,24 +152,24 @@ public class ClienteView extends JFrame {
 		JLabel lblValCNH = new JLabel("Validade CNH:");
 		lblValCNH.setBounds(12, 260, 208, 16);
 
-		JLabel lblCNPJ= new JLabel("CNPJ:");
+		JLabel lblCNPJ = new JLabel("CNPJ:");
 		lblCNPJ.setBounds(80, 204, 208, 16);
 
 		JLabel lblContato = new JLabel("Nome de pessoa para contato:");
-		lblContato.setBounds(20, 230, 208, 16);
+		lblContato.setBounds(20, 235, 260, 16);
 
 		txtNome = new JTextField();
 		txtNome.setBounds(72, 32, 130, 26);
 		txtNome.setColumns(10);
-		
+
 		txtEmail = new JTextField();
 		txtEmail.setBounds(72, 62, 130, 26);
 		txtEmail.setColumns(10);
-		
+
 		txtTelefone = new JTextField();
 		txtTelefone.setBounds(72, 94, 130, 26);
 		txtTelefone.setColumns(10);
-		
+
 		txtRua = new JTextField();
 		txtRua.setBounds(285, 10, 130, 26);
 		txtRua.setColumns(10);
@@ -176,42 +177,95 @@ public class ClienteView extends JFrame {
 		txtNumero = new JTextField();
 		txtNumero.setBounds(285, 33, 130, 26);
 		txtNumero.setColumns(10);
-		
+
 		txtBairro = new JTextField();
 		txtBairro.setBounds(285, 62, 130, 26);
 		txtBairro.setColumns(10);
-		
-		txtCidade= new JTextField();
+
+		txtCidade = new JTextField();
 		txtCidade.setBounds(285, 90, 130, 26);
 		txtCidade.setColumns(10);
-		
-		txtComplemento= new JTextField();
+
+		txtComplemento = new JTextField();
 		txtComplemento.setBounds(285, 120, 130, 26);
 		txtComplemento.setColumns(10);
-		
+
 		txtCPF = new JTextField();
 		txtCPF.setBounds(140, 200, 130, 26);
 		txtCPF.setColumns(10);
-		
-		cbbTipoUsuario =  new JComboBox<>(new String[] { "Pessoa Física", "Pessoa Jurídica" });
+
+		cbbTipoUsuario = new JComboBox<>(new String[] { "Pessoa Física", "Pessoa Jurídica" });
 		cbbTipoUsuario.setBounds(184, 158, 216, 27);
-		
+
 		txtCNH = new JTextField();
 		txtCNH.setBounds(140, 230, 130, 26);
 		txtCNH.setColumns(10);
-		
+
 		txtValCNH = new JTextField();
 		txtValCNH.setBounds(140, 258, 130, 26);
 		txtValCNH.setColumns(10);
-		
+
 		txtCNPJ = new JTextField();
 		txtCNPJ.setBounds(140, 200, 130, 26);
 		txtCNPJ.setColumns(10);
-		
+
 		txtContato = new JTextField();
-		txtContato.setBounds(140, 230, 130, 26);
+		txtContato.setBounds(245, 230, 130, 26);
 		txtContato.setColumns(10);
-		
+
+		formPane.add(lblNome);
+		formPane.add(txtNome);
+
+		formPane.add(lblTelefone);
+		formPane.add(txtTelefone);
+
+		formPane.add(lblEmail);
+		formPane.add(txtEmail);
+
+		formPane.add(lblRua);
+		formPane.add(txtRua);
+
+		formPane.add(lblNumero);
+		formPane.add(txtNumero);
+
+		formPane.add(lblBairro);
+		formPane.add(txtBairro);
+
+		formPane.add(lblCidade);
+		formPane.add(txtCidade);
+
+		formPane.add(lblComplemento);
+		formPane.add(txtComplemento);
+
+		formPane.add(lblTipoUsuario);
+		formPane.add(cbbTipoUsuario);
+
+		formPane.add(lblCPF);
+		formPane.add(txtCPF);
+
+		formPane.add(lblCNH);
+		formPane.add(txtCNH);
+
+		formPane.add(lblValCNH);
+		formPane.add(txtValCNH);
+
+		formPane.add(lblCNPJ);
+		formPane.add(txtCNPJ);
+
+		formPane.add(lblContato);
+		formPane.add(txtContato);
+
+		lblCPF.setVisible(false);
+		txtCPF.setVisible(false);
+		lblCNH.setVisible(false);
+		txtCNH.setVisible(false);
+		lblValCNH.setVisible(false);
+		txtValCNH.setVisible(false);
+		lblCNPJ.setVisible(false);
+		txtCNPJ.setVisible(false);
+		lblContato.setVisible(false);
+		txtContato.setVisible(false);
+
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(91, 300, 117, 29);
 
@@ -221,7 +275,7 @@ public class ClienteView extends JFrame {
 
 			}
 		});
-		
+
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(207, 300, 117, 29);
 
@@ -230,60 +284,126 @@ public class ClienteView extends JFrame {
 				actionCancelar();
 			}
 		});
-		
-		formPane.add(lblNome);
-		formPane.add(txtNome);
-		
-		formPane.add(lblTelefone);
-		formPane.add(txtTelefone);
-		
-		formPane.add(lblEmail);
-		formPane.add(txtEmail);
-		
-		formPane.add(lblRua);
-		formPane.add(txtRua);
-		
-		formPane.add(lblNumero);
-		formPane.add(txtNumero);
-		
-		formPane.add(lblBairro);
-		formPane.add(txtBairro);
-		
-		formPane.add(lblCidade);
-		formPane.add(txtCidade);
-		
-		formPane.add(lblComplemento);
-		formPane.add(txtComplemento);
-		
-		formPane.add(lblTipoUsuario);
-		formPane.add(cbbTipoUsuario);
-		
-		formPane.add(btnSalvar);
-		formPane.add(btnCancelar);
 
-		
 		// Adiciona ação ao ComboBox para exibir/ocultar campoInformacaoExtra
 		cbbTipoUsuario.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String tipoUsuarioSelecionado = (String) cbbTipoUsuario.getSelectedItem();
 				if ("Pessoa Física".equals(tipoUsuarioSelecionado)) {
-					formPane.add(lblCPF);
-					formPane.add(txtCPF);
-					formPane.add(lblCNH);
-					formPane.add(txtCNH);
-					formPane.add(lblValCNH);
-					formPane.add(txtValCNH);
+					lblCPF.setVisible(true);
+					txtCPF.setVisible(true);
+					lblCNH.setVisible(true);
+					txtCNH.setVisible(true);
+					lblValCNH.setVisible(true);
+					txtValCNH.setVisible(true);
+					lblCNPJ.setVisible(false);
+					txtCNPJ.setVisible(false);
+					lblContato.setVisible(false);
+					txtContato.setVisible(false);
 				} else {
-					formPane.add(lblCNPJ);
-					formPane.add(txtCNPJ);
-					formPane.add(lblContato);
-					formPane.add(txtContato);
+					lblCNPJ.setVisible(true);
+					txtCNPJ.setVisible(true);
+					lblContato.setVisible(true);
+					txtContato.setVisible(true);
+					lblCPF.setVisible(false);
+					txtCPF.setVisible(false);
+					lblCNH.setVisible(false);
+					txtCNH.setVisible(false);
+					lblValCNH.setVisible(false);
+					txtValCNH.setVisible(false);
 				}
 			}
-		}
-			
+		});
+
+		formPane.add(btnSalvar);
+		formPane.add(btnCancelar);
 	}
 
+	private void actionSalvar() {
+		ClienteController controller = MainController.getClienteController();
+
+		try {
+			String nome = txtNome.getText();
+			String telefoneStr = txtTelefone.getText();
+			Long telefone = Long.parseLong(telefoneStr);
+			String email = txtEmail.getText();
+
+			String rua = txtNome.getText();
+			String numeroStr = txtNumero.getText();
+			int numero = Integer.parseInt(numeroStr);
+			String bairro = txtBairro.getText();
+			String cidade = txtCidade.getText();
+			String complemento = txtComplemento.getText();
+
+			String cpfStr = txtCPF.getText();
+			Long cpf = Long.parseLong(telefoneStr);
+			String cnhStr = txtCNH.getText();
+			Long cnh = Long.parseLong(cnhStr);
+			String valCNHStr = txtValCNH.getText();
+			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+			Date valCNH = formato.parse(valCNHStr);
+
+			String cnpjStr = txtCNPJ.getText();
+			long cnpj = Long.parseLong(cnpjStr);
+			String contato = txtContato.getText();
+
+			controller.addEndereco(rua, numero, bairro, cidade, complemento);
+			
+			String endereco = (String) controller.getEnderecos();
+
+			
+			if (cpf == null) {
+				controller.addPessoaJuridica(nome, email, telefone, endereco, cnpj, contato);
+			} else {
+				controller.addPessoaFisica(nome, email, telefone, endereco, cpf, cnh, valCNH);
+			}
+
+		} catch (NumberFormatException e) {
+
+			JOptionPane.showMessageDialog(this, "Tipo inserido inválido!");
+			return;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		limparForm();
+
+	}
+
+	private void actionListar1() {
+
+		ClienteController controller = MainController.getClienteController();
+
+		List<String> lista = controller.getPessoasFisicas();
+
+		textAreaList.setText(null);
+
+		for (String strCliente : lista) {
+			textAreaList.append(String.format("%s\n", strCliente));
+		}
+	}
+
+	private void limparForm() {
+		txtNome.setText("");
+		txtTelefone.setText("");
+		txtEmail.setText("");
+		txtRua.setText("");
+		txtNumero.setText("");
+		txtBairro.setText("");
+		txtCidade.setText("");
+		txtComplemento.setText("");
+		txtCPF.setText("");
+		txtCNH.setText("");
+		txtValCNH.setText("");
+		txtCNPJ.setText("");
+		txtContato.setText("");
+
+	}
+
+	private void actionCancelar() {
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
 
 }

@@ -14,6 +14,14 @@ public abstract class Cliente implements Serializable {
 	private Endereco endereco;
 	private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 	
+	
+	public Cliente(String nome, String email, long telefone, Endereco endereco) {
+		this.nome = nome;
+		this.email = email;
+		this.telefone = telefone;
+		this.endereco = endereco;	
+	}
+
 	public String getNome() {
 		return nome;
 	}

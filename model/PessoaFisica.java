@@ -16,6 +16,13 @@ public class PessoaFisica extends Cliente{
 	public ArrayList<Locacao> getLocacoes() {
 		return locacoes;
 	}
+	
+	public PessoaFisica (long cpf, long numCNH, Date validadeCNH, String nome, long telefone, String email, Endereco endereco ) {
+		super(nome, email, telefone, endereco);
+		this.cpf = cpf;
+		this.numCNH = numCNH;
+		this.validadeCNH = validadeCNH;
+	}
 
 	public void setLocacoes(ArrayList<Locacao> locacoes) {
 		this.locacoes = locacoes;
@@ -29,10 +36,6 @@ public class PessoaFisica extends Cliente{
 		this.validadeCNH = validadeCNH;
 	}
 
-	public PessoaFisica (long cpf) {
-		this.cpf = cpf;
-	}
-	
 	public long getCpf() {
 		return cpf;
 	}

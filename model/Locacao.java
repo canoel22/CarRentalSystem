@@ -1,9 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Locacao {
+public class Locacao implements Serializable{
+	
+	private static final long serialVersionUID = 4043876049413554598L;
+	
 	private final Date dataHoraRetirada;
 	private final long kmRetirada; 
 	private Date dataHoraDevolucao;

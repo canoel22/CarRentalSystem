@@ -25,9 +25,11 @@ public class Serializer {
 
 		} catch (FileNotFoundException e) {
 			System.out.println(String.format("Arquivo %s não encontrado...", fileName));
+			e.printStackTrace();
 
 		} catch (IOException e) {
 			System.err.println(String.format("Erro na leitura do arquivo %s!", fileName));
+			e.printStackTrace();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

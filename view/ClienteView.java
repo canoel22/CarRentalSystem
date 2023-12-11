@@ -34,6 +34,11 @@ public class ClienteView extends JFrame {
 	private JTextArea textAreaList;
 	private JLabel lblClientes;
 
+	private JPanel listPaneJ; // Painel de Listagem por categoria
+
+	private JTextArea textAreaListJ;
+	private JLabel lblClientesJ;
+
 	private JPanel formPane; // Painel de cadastro
 
 	private JTextField txtNome;
@@ -74,15 +79,22 @@ public class ClienteView extends JFrame {
 
 		formPane = new JPanel();
 		listPane = new JPanel();
+		listPaneJ = new JPanel();
 
 		initFormPane();
 		initListPane();
+		initListPaneJ();
 
 		tabbedPane.add("Listagem", listPane);
+		tabbedPane.add("Listagem", listPaneJ);
 
-		lblClientes = new JLabel("Lista de usuários");
-		lblClientes.setBounds(12, 27, 150, 15);
+		lblClientes = new JLabel("Lista de pessoas físicas");
+		lblClientes.setBounds(12, 27, 207, 15);
 		listPane.add(lblClientes);
+
+		lblClientesJ = new JLabel("Lista de pessoas jurídicas");
+		lblClientesJ.setBounds(12, 27, 196, 15);
+		listPaneJ.add(lblClientesJ);
 
 		tabbedPane.add("Cadastro", formPane);
 	}
@@ -92,7 +104,7 @@ public class ClienteView extends JFrame {
 		listPane.setLayout(null);
 
 		JButton btnListar = new JButton("Listar");
-		btnListar.setBounds(147, 20, 109, 29);
+		btnListar.setBounds(194, 20, 109, 29);
 
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -106,6 +118,27 @@ public class ClienteView extends JFrame {
 		listPane.add(textAreaList);
 
 		listPane.add(btnListar);
+	}
+
+	private void initListPaneJ() {
+
+		listPaneJ.setLayout(null);
+
+		JButton btnListarJ = new JButton("Listar");
+		btnListarJ.setBounds(214, 20, 109, 29);
+
+		btnListarJ.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionListar2();
+			}
+		});
+
+		textAreaListJ = new JTextArea();
+		textAreaListJ.setBounds(12, 60, 401, 300);
+
+		listPaneJ.add(textAreaListJ);
+
+		listPaneJ.add(btnListarJ);
 	}
 
 	private void initFormPane() {
@@ -345,13 +378,15 @@ public class ClienteView extends JFrame {
 			controller.addEndereco(rua, numero, bairro, cidade, complemento);
 
 			Endereco endereco = controller.getEnderecos(rua, numero, bairro, cidade, complemento);
-
-			if (escolha = false) {
-				controller.addPessoaJuridica(nome, email, telefone, endereco, cnpj, contato);
-				System.out.printf("Cadastrou");
-			} else {
+			
+			String opcaoEscolhida = (String) cbbTipoUsuario.getSelectedItem();
+			
+			if ("Pessoa Física".equals(opcaoEscolhida)) {
 				controller.addPessoaFisica(nome, email, telefone, endereco, cpf, cnh, valCNH);
-				System.out.printf("Cadastrou");
+				System.out.printf("Cadastrou fisica");
+			} else {
+				controller.addPessoaJuridica(nome, email, telefone, endereco, cnpj, contato);
+				System.out.printf("Cadastrou juridica");
 			}
 
 		} catch (Exception e) {
@@ -372,6 +407,19 @@ public class ClienteView extends JFrame {
 
 		for (String strCliente : lista) {
 			textAreaList.append(String.format("%s\n", strCliente));
+		}
+	}
+
+	private void actionListar2() {
+
+		ClienteController controller = MainController.getClienteController();
+
+		List<String> lista = controller.getPessoasJuridicas();
+
+		textAreaListJ.setText(null);
+
+		for (String strClienteJ : lista) {
+			textAreaListJ.append(String.format("%s\n", strClienteJ));
 		}
 	}
 

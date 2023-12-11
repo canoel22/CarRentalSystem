@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -9,6 +11,7 @@ import java.util.TreeMap;
 import model.Endereco;
 import model.PessoaFisica;
 import model.PessoaJuridica;
+import model.Veiculo;
 
 public class ClienteController implements Serializable {
 
@@ -30,9 +33,15 @@ public class ClienteController implements Serializable {
 		MainController.save();
 	}
 
-	public Set<String> getEnderecos() {
-		return enderecos.keySet(); // retorna lista das chaves do map modelos
-	}
+	public List<String> getEnderecos(String Rua) {
+		List<String> lista = new ArrayList<>();
+
+		for (Endereco endereco : enderecos.values())
+			lista.add(String.format("%s\t%d\t%s\t%s\t%d\t%s\t", endereco.getRua(), endereco.getNumero(),
+					endereco.getBairro(), endereco.getCidade(), endereco.getComplemento()));
+
+		return lista;
+			}
 
 	public void addPessoaFisica(String nome, String email, long telefone, String endereco, long cpf, long cnh,
 			Date valCNH) {
@@ -45,9 +54,13 @@ public class ClienteController implements Serializable {
 		MainController.save();
 	}
 
-	public Set<String> getPessoasFisicas() {
-		return pessoasFisicas.keySet(); // retorna lista das chaves do map modelos
-	}
+	public List<String> getPessoasFisicas() {
+		List<String> lista = new ArrayList<>();
+
+		for (PessoaFisica pessoaFisica : pessoasFisicas.values())
+			lista.add(String.format("%s\t%ld\t", pessoaFisica.getNome(), pessoaFisica.getCpf()));
+
+		return lista;	}
 
 	public void addPessoaJuridica(String nome, String email, long telefone, String endereco, long cnpj,
 			String contato) {

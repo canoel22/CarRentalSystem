@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.ClienteController;
 import controller.MainController;
+import model.Endereco;
 
 public class ClienteView extends JFrame {
 

@@ -12,7 +12,8 @@ import javax.swing.JRadioButton;
 
 public class MenuView extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 1469409378012632272L;
 
 	private ButtonGroup G1;
 

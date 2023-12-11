@@ -4,15 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
@@ -53,6 +50,8 @@ public class ClienteView extends JFrame {
 	private JTextField txtValCNH;
 	private JTextField txtCNPJ;
 	private JTextField txtContato;
+
+	boolean escolha;
 
 	public ClienteView() {
 		initialize();
@@ -111,8 +110,6 @@ public class ClienteView extends JFrame {
 
 	private void initFormPane() {
 
-		ClienteController controller = MainController.getClienteController();
-
 		formPane.setLayout(null);
 
 		JLabel lblNome = new JLabel("Nome");
@@ -154,7 +151,7 @@ public class ClienteView extends JFrame {
 		lblValCNH.setBounds(12, 260, 208, 16);
 
 		JLabel lblCNPJ = new JLabel("CNPJ:");
-		lblCNPJ.setBounds(80, 204, 208, 16);
+		lblCNPJ.setBounds(180, 204, 208, 16);
 
 		JLabel lblContato = new JLabel("Nome de pessoa para contato:");
 		lblContato.setBounds(20, 235, 260, 16);
@@ -207,7 +204,7 @@ public class ClienteView extends JFrame {
 		txtValCNH.setColumns(10);
 
 		txtCNPJ = new JTextField();
-		txtCNPJ.setBounds(140, 200, 130, 26);
+		txtCNPJ.setBounds(245, 200, 130, 26);
 		txtCNPJ.setColumns(10);
 
 		txtContato = new JTextField();
@@ -302,6 +299,7 @@ public class ClienteView extends JFrame {
 					txtCNPJ.setVisible(false);
 					lblContato.setVisible(false);
 					txtContato.setVisible(false);
+					escolha = true;
 				} else {
 					lblCNPJ.setVisible(true);
 					txtCNPJ.setVisible(true);
@@ -313,6 +311,7 @@ public class ClienteView extends JFrame {
 					txtCNH.setVisible(false);
 					lblValCNH.setVisible(false);
 					txtValCNH.setVisible(false);
+					escolha = false;
 				}
 			}
 		});
@@ -326,8 +325,7 @@ public class ClienteView extends JFrame {
 
 		try {
 			String nome = txtNome.getText();
-			String telefoneStr = txtTelefone.getText();
-			Long telefone = Long.parseLong(telefoneStr);
+			String telefone = txtTelefone.getText();
 			String email = txtEmail.getText();
 
 			String rua = txtNome.getText();
@@ -337,33 +335,24 @@ public class ClienteView extends JFrame {
 			String cidade = txtCidade.getText();
 			String complemento = txtComplemento.getText();
 
-			String cpfStr = txtCPF.getText();
-			Long cpf = Long.parseLong(telefoneStr);
-			String cnhStr = txtCNH.getText();
-			Long cnh = Long.parseLong(cnhStr);
-			String valCNHStr = txtValCNH.getText();
-			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-			Date valCNH = formato.parse(valCNHStr);
+			String cpf = txtCPF.getText();
+			String cnh = txtCNH.getText();
+			String valCNH = txtValCNH.getText();
 
-			String cnpjStr = txtCNPJ.getText();
-			long cnpj = Long.parseLong(cnpjStr);
+			String cnpj = txtCNPJ.getText();
 			String contato = txtContato.getText();
 
 			controller.addEndereco(rua, numero, bairro, cidade, complemento);
-			
-			String endereco = (String) controller.getEnderecos();
 
-			
-			if (cpf == null) {
+			Endereco endereco = controller.getEnderecos(rua, numero, bairro, cidade, complemento);
+
+			if (escolha = false) {
 				controller.addPessoaJuridica(nome, email, telefone, endereco, cnpj, contato);
+				System.out.printf("Cadastrou");
 			} else {
 				controller.addPessoaFisica(nome, email, telefone, endereco, cpf, cnh, valCNH);
+				System.out.printf("Cadastrou");
 			}
-
-		} catch (NumberFormatException e) {
-
-			JOptionPane.showMessageDialog(this, "Tipo inserido inválido!");
-			return;
 
 		} catch (Exception e) {
 			e.printStackTrace();

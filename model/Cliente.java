@@ -9,13 +9,13 @@ public abstract class Cliente implements Serializable {
 	
 	private String nome;	
 	private String email;
-	private long telefone;
+	private String telefone;
 	
 	private Endereco endereco;
 	private ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 	
 	
-	public Cliente(String nome, String email, long telefone, Endereco endereco) {
+	public Cliente(String nome, String email, String telefone, Endereco endereco) {
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
@@ -46,11 +46,11 @@ public abstract class Cliente implements Serializable {
 		this.reservas = reservas;
 	}
 
-	public long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 

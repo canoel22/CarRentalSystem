@@ -56,8 +56,6 @@ public class ClienteView extends JFrame {
 	private JTextField txtCNPJ;
 	private JTextField txtContato;
 
-	boolean escolha;
-
 	public ClienteView() {
 		initialize();
 	}
@@ -332,7 +330,6 @@ public class ClienteView extends JFrame {
 					txtCNPJ.setVisible(false);
 					lblContato.setVisible(false);
 					txtContato.setVisible(false);
-					escolha = true;
 				} else {
 					lblCNPJ.setVisible(true);
 					txtCNPJ.setVisible(true);
@@ -344,7 +341,6 @@ public class ClienteView extends JFrame {
 					txtCNH.setVisible(false);
 					lblValCNH.setVisible(false);
 					txtValCNH.setVisible(false);
-					escolha = false;
 				}
 			}
 		});
@@ -378,9 +374,9 @@ public class ClienteView extends JFrame {
 			controller.addEndereco(rua, numero, bairro, cidade, complemento);
 
 			Endereco endereco = controller.getEnderecos(rua, numero, bairro, cidade, complemento);
-			
+
 			String opcaoEscolhida = (String) cbbTipoUsuario.getSelectedItem();
-			
+
 			if ("Pessoa Física".equals(opcaoEscolhida)) {
 				controller.addPessoaFisica(nome, email, telefone, endereco, cpf, cnh, valCNH);
 				System.out.printf("Cadastrou fisica");

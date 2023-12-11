@@ -2,32 +2,32 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class Reserva implements Serializable{
-	
+public class Reserva implements Serializable {
+
 	private static final long serialVersionUID = 3094834473305359132L;
-	
+
 	private final int numReserva;
-	private final Date inicioReserva;
-	private final Date fimReserva;
+	private final String inicioReserva;
+	private final String fimReserva;
 	private final int valorTarifaDiaria;
 
 	private Categoria categoria;
 	private ArrayList<Seguro> segurosContratados = new ArrayList<Seguro>();
-	
-	public Reserva(int numReserva, Date inicioReserva, Date fimReserva, int valorTarifaDiaria) {
+
+	public Reserva(int numReserva, String inicioReserva, String fimReserva, int valorTarifaDiaria, Categoria categoria) {
 		this.numReserva = numReserva;
 		this.inicioReserva = inicioReserva;
 		this.fimReserva = fimReserva;
 		this.valorTarifaDiaria = valorTarifaDiaria;
+		this.categoria = categoria;
 	}
 
 	public int getNumReserva() {
 		return numReserva;
 	}
 
-	public Date getInicioReserva() {
+	public String getInicioReserva() {
 		return inicioReserva;
 	}
 
@@ -39,7 +39,7 @@ public class Reserva implements Serializable{
 		this.segurosContratados = segurosContratados;
 	}
 
-	public Date getFimReserva() {
+	public String getFimReserva() {
 		return fimReserva;
 	}
 
@@ -54,6 +54,5 @@ public class Reserva implements Serializable{
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-
 
 }

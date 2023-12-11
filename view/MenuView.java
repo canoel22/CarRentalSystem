@@ -150,8 +150,8 @@ public class MenuView extends JFrame {
 			categoriaView.setVisible(true);
 
 		} else if (jRadioButton5.isSelected()) {
-			//ReservaView reservaView = new ReservaView();
-			//reservaView.setVisible(true);
+			ReservaView reservaView = new ReservaView();
+			reservaView.setVisible(true);
 
 		} else if (jRadioButton6.isSelected()) {
 			//InicioLocacaoView inicioLocacaoView = new InicioLocacaoView();

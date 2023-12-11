@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import model.Cliente;
 import model.Endereco;
 import model.PessoaFisica;
 import model.PessoaJuridica;
@@ -15,12 +16,14 @@ public class ClienteController implements Serializable {
 	private static final long serialVersionUID = -2986449868123120251L;
 
 	private Map<String, Endereco> enderecos;
+	private Map<String, Cliente> clientes;
 	private Map<String, PessoaFisica> pessoasFisicas;
 	private Map<String, PessoaJuridica> pessoasJuridicas;
 
 	public ClienteController() {
 
 		enderecos = new TreeMap<>();
+		clientes = new TreeMap<>();
 		pessoasFisicas = new TreeMap<>();
 		pessoasJuridicas = new TreeMap<>();
 	}
@@ -35,6 +38,15 @@ public class ClienteController implements Serializable {
 		Endereco endereco = new Endereco(rua, numero, bairro, cidade, complemento);
 
 		return endereco;
+	}
+
+	public List<String> getClientes() {
+		List<String> lista = new ArrayList<>();
+
+		for (Cliente cliente : clientes.values())
+			lista.add(String.format("%s\t%s\t", cliente.getNome()));
+
+		return lista;
 	}
 
 	public void addPessoaFisica(String nome, String email, String telefone, Endereco endereco, String cpf, String cnh,

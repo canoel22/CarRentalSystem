@@ -108,10 +108,26 @@ public class CadastroModeloView extends JFrame {
 
 		String nome = txtNome.getText();
 		String anoModeloStr = txtanoModelo.getText();
-		int anoModelo = Integer.parseInt(anoModeloStr);
-		String fabricante = txtFabricante.getText();
-
-		controller.addModelo(nome, anoModelo, fabricante);
+		try {
+			int anoModelo = Integer.parseInt(anoModeloStr);
+			if (verificacoes.Verificacoes.anoMaiorQueAtual(anoModelo)) {
+				verificacoes.Verificacoes.exibirPopup("Erro", "Ano inválido!");
+				return;
+			}
+			
+			String fabricante = txtFabricante.getText();
+			
+			if (!verificacoes.Verificacoes.verificarCamposPreenchidos(nome, fabricante)) {
+				verificacoes.Verificacoes.exibirPopup("Erro", "Por favor, preencha todos os campos.");
+				return;
+			}
+	
+			controller.addModelo(nome, anoModelo, fabricante);
+			
+		} catch (NumberFormatException e) {
+			verificacoes.Verificacoes.exibirPopup("Erro", "O ano informado nao é válido, digite somente números");
+			return;
+		}
 
 		limparForm();
 

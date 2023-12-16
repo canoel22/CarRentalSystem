@@ -67,7 +67,7 @@ public class ReservaView extends JFrame {
 		listPane = new JPanel();
 
 		initFormPane();
-		//initListPane();
+		initListPane();
 
 		tabbedPane.add("Listagem", listPane);
 

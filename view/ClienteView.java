@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -29,17 +32,17 @@ public class ClienteView extends JFrame {
 
 	private JTabbedPane tabbedPane;
 
-	private JPanel listPane; // Painel de Listagem por categoria
+	private JPanel listPane; // -> Painel de Listagem por categoria
 
 	private JTextArea textAreaList;
 	private JLabel lblClientes;
 
-	private JPanel listPaneJ; // Painel de Listagem por categoria
+	private JPanel listPaneJ; // -> Painel de Listagem por categoria
 
 	private JTextArea textAreaListJ;
 	private JLabel lblClientesJ;
 
-	private JPanel formPane; // Painel de cadastro
+	private JPanel formPane; // -> Painel de cadastro
 
 	private JTextField txtNome;
 	private JTextField txtEmail;
@@ -354,39 +357,112 @@ public class ClienteView extends JFrame {
 
 		try {
 			String nome = txtNome.getText();
-			String telefone = txtTelefone.getText();
+
 			String email = txtEmail.getText();
+			if (!verificacoes.Verificacoes.validarEmail(email)) {
+				verificacoes.Verificacoes.exibirPopup("Erro", "Email inválido!");
+				return;
+			}
+
+			String telefoneStr = txtTelefone.getText();
+			long telefone = Long.parseLong(telefoneStr);
+			if (telefoneStr.length() != 12 || telefoneStr.charAt(3) != '9') {
+				verificacoes.Verificacoes.exibirPopup("Erro",
+						"O telefone deve ter exatamente 12 dígitos: (DDD)9XXXX-XXXX (sem espaços ou caracteres entre os números)");
+				return;
+			}
 
 			String rua = txtNome.getText();
 			String numeroStr = txtNumero.getText();
-			int numero = Integer.parseInt(numeroStr);
-			String bairro = txtBairro.getText();
-			String cidade = txtCidade.getText();
-			String complemento = txtComplemento.getText();
+			try {
+				int numero = Integer.parseInt(numeroStr);
+				String bairro = txtBairro.getText();
+				String cidade = txtCidade.getText();
+				String complemento = txtComplemento.getText();
 
-			String cpf = txtCPF.getText();
-			String cnh = txtCNH.getText();
-			String valCNH = txtValCNH.getText();
+				if (!verificacoes.Verificacoes.verificarCamposPreenchidos(nome, rua, bairro, cidade, complemento)) {
+					verificacoes.Verificacoes.exibirPopup("Erro","Por favor, preencha todos os campos.");
+					return;
+				}
 
-			String cnpj = txtCNPJ.getText();
-			String contato = txtContato.getText();
+				controller.addEndereco(rua, numero, bairro, cidade, complemento);
 
-			controller.addEndereco(rua, numero, bairro, cidade, complemento);
+				Endereco endereco = controller.getEnderecos(rua, numero, bairro, cidade, complemento);
 
-			Endereco endereco = controller.getEnderecos(rua, numero, bairro, cidade, complemento);
+				String opcaoEscolhida = (String) cbbTipoUsuario.getSelectedItem();
 
-			String opcaoEscolhida = (String) cbbTipoUsuario.getSelectedItem();
+				if ("Pessoa Física".equals(opcaoEscolhida)) {
 
-			if ("Pessoa Física".equals(opcaoEscolhida)) {
-				controller.addPessoaFisica(nome, email, telefone, endereco, cpf, cnh, valCNH);
-				System.out.printf("Cadastrou fisica");
-			} else {
-				controller.addPessoaJuridica(nome, email, telefone, endereco, cnpj, contato);
-				System.out.printf("Cadastrou juridica");
+					String cpfStr = txtCPF.getText();
+					if (!verificacoes.Verificacoes.validarCPF(cpfStr)) {
+						verificacoes.Verificacoes.exibirPopup("Erro", "CPF inválido!");
+						return;
+					}
+					long cpf = Long.parseLong(cpfStr);
+
+					String cnhStr = txtCNH.getText();
+					if (cnhStr.length() != 11) {
+						verificacoes.Verificacoes.exibirPopup("Erro", "CNH inválida!");
+						return;
+					}
+					try {
+						long cnh = Long.parseLong(cnhStr);
+
+						String valCNHStr = txtValCNH.getText();
+						String formatoData = "dd/MM/yyyy";
+						SimpleDateFormat formato = new SimpleDateFormat(formatoData);
+						try {
+							Date valCNH = formato.parse(valCNHStr);
+							Date hoje = new Date();
+							if (!valCNH.after(hoje)) {
+								verificacoes.Verificacoes.exibirPopup("Erro",
+										"CNH vencida! Não é possível fazer o cadastro!");
+							}
+
+							controller.addPessoaFisica(nome, email, telefone, endereco, cpf, cnh, valCNH);
+							System.out.printf("Cadastrou fisica");
+
+						} catch (ParseException e) {
+							verificacoes.Verificacoes.exibirPopup("Erro", "Data inválida!");
+							return;
+						}
+
+					} catch (NumberFormatException e) {
+						verificacoes.Verificacoes.exibirPopup("Erro",
+								"A CNH informada nao é valida, digite somente números");
+						return;
+					}
+
+				} else {
+					String cnpjStr = txtCNPJ.getText();
+					if (!verificacoes.Verificacoes.validarCPF(cnpjStr)) {
+						verificacoes.Verificacoes.exibirPopup("Erro", "CNPJ inválido!");
+						return;
+					}
+					long cnpj = Long.parseLong(cnpjStr);
+
+					String contato = txtContato.getText();
+
+					controller.addPessoaJuridica(nome, email, telefone, endereco, cnpj, contato);
+					System.out.printf("Cadastrou juridica");
+
+					if (!verificacoes.Verificacoes.verificarCamposPreenchidos(contato)) {
+						System.out.println("Por favor, preencha todos os campos.");
+						return;
+					}
+				}
+
+			} catch (NumberFormatException e) {
+				verificacoes.Verificacoes.exibirPopup("Erro",
+						"O número do endereço informado nao é valido, digite somente numeros");
+				return;
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (
+
+		NumberFormatException e) {
+			verificacoes.Verificacoes.exibirPopup("Erro", "O telefone informado nao é valido, digite somente numeros");
+			return;
 		}
 
 		limparForm();

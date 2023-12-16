@@ -4,31 +4,33 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Locacao implements Serializable{
-	
+public class Locacao implements Serializable {
+
 	private static final long serialVersionUID = 4043876049413554598L;
-	
+
 	private final Date dataHoraRetirada;
-	private final long kmRetirada; 
+	private final long kmRetirada;
 	private Date dataHoraDevolucao;
-	private long kmDevolucao; 
-	
+	private long kmDevolucao;
+
 	private PessoaFisica condutor;
 	private ArrayList<Pagamento> pagamentos = new ArrayList<Pagamento>();
 	private Veiculo veiculo;
-	
+	private Reserva reserva;
+
+	public Locacao(Date dataHoraRetirada, long kmRetirada, Date dataHoraDevolucao, long kmDevolucao,
+			PessoaFisica condutor, Veiculo veiculo, Reserva reserva) {
+		this.dataHoraRetirada = dataHoraRetirada;
+		this.kmRetirada = kmRetirada;
+		
+	}
+
 	public PessoaFisica getCondutor() {
 		return condutor;
 	}
 
 	public void setCondutor(PessoaFisica condutor) {
 		this.condutor = condutor;
-	}
-
-	
-	public Locacao(Date dataHoraRetirada, long kmRetirada) {
-		this.dataHoraRetirada = dataHoraRetirada;
-		this.kmRetirada = kmRetirada;	
 	}
 
 	public ArrayList<Pagamento> getPagamentos() {
@@ -69,6 +71,14 @@ public class Locacao implements Serializable{
 
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
+	}
+
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
 	}
 
 }

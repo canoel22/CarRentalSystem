@@ -1,22 +1,17 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.Date;
 
 public class PessoaFisica extends Cliente {
 
 	private static final long serialVersionUID = -6949786183798229303L;
 
-	private final String cpf;
-	private String numCNH;
-	private String validadeCNH;
+	private final long cpf;
+	private long numCNH;
+	private Date validadeCNH;
 
-	private ArrayList<Locacao> locacoes = new ArrayList<Locacao>();
 
-	public ArrayList<Locacao> getLocacoes() {
-		return locacoes;
-	}
-
-	public PessoaFisica(String cpf, String numCNH, String validadeCNH, String nome, String telefone, String email,
+	public PessoaFisica(long cpf, long numCNH, Date validadeCNH, String nome, long telefone, String email,
 			Endereco endereco) {
 		super(nome, email, telefone, endereco);
 		this.cpf = cpf;
@@ -24,27 +19,24 @@ public class PessoaFisica extends Cliente {
 		this.validadeCNH = validadeCNH;
 	}
 
-	public void setLocacoes(ArrayList<Locacao> locacoes) {
-		this.locacoes = locacoes;
-	}
 
-	public void setNumCNH(String numCNH) {
+	public void setNumCNH(long numCNH) {
 		this.numCNH = numCNH;
 	}
 
-	public void setValidadeCNH(String validadeCNH) {
+	public void setValidadeCNH(Date validadeCNH) {
 		this.validadeCNH = validadeCNH;
 	}
 
-	public String getCpf() {
+	public long getCpf() {
 		return cpf;
 	}
 
-	public String getNumCNH() {
+	public long getNumCNH() {
 		return numCNH;
 	}
 
-	public String getValidadeCNH() {
+	public Date getValidadeCNH() {
 		return validadeCNH;
 	}
 

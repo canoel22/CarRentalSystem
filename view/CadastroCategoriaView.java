@@ -99,9 +99,16 @@ public class CadastroCategoriaView extends JFrame {
 
 		String nome = txtNome.getText();
 		String tarifaDiariaStr = txtTarifaDiaria.getText();
-		Double tarifaDiaria = Double.parseDouble(tarifaDiariaStr);
-
-		controller.addCategoria(nome, tarifaDiaria);
+		try {
+			Double tarifaDiaria = Double.parseDouble(tarifaDiariaStr);
+	
+			controller.addCategoria(nome, tarifaDiaria);
+			
+		} catch (NumberFormatException e) {
+			verificacoes.Verificacoes.exibirPopup("Erro",
+					"A tarifa informada não é válida, digite somente números");
+			return;
+		}
 
 		limparForm();
 

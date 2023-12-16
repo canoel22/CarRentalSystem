@@ -11,7 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
@@ -49,7 +48,7 @@ public class CadastroSeguroView extends JFrame {
 		setTitle("Seguros");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 440, 338);		
+		setBounds(100, 100, 440, 338);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -165,23 +164,25 @@ public class CadastroSeguroView extends JFrame {
 	private void actionSalvar() {
 		CatalogoController controller = MainController.getCatalogoController();
 
-		try {
-			String descricao = txtDescricao.getText();
+		String descricao = txtDescricao.getText();
 
-			String percentualTarifaStr = txtPercentualTarifa.getText();
+		String percentualTarifaStr = txtPercentualTarifa.getText();
+		try {
 			int percentualTarifa = Integer.parseInt(percentualTarifaStr);
 
 			String categoria = (String) cbbCategoria.getSelectedItem();
 
+			if (!verificacoes.Verificacoes.verificarCamposPreenchidos(descricao)) {
+				verificacoes.Verificacoes.exibirPopup("Erro", "Por favor, preencha todos os campos.");
+				return;
+			}
+
 			controller.addSeguro(descricao, percentualTarifa, categoria);
 
 		} catch (NumberFormatException e) {
-
-			JOptionPane.showMessageDialog(this, "Tipo inserido inválido!");
+			verificacoes.Verificacoes.exibirPopup("Erro",
+					"O percentual informado nao é valido, digite somente números");
 			return;
-
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 		limparForm();

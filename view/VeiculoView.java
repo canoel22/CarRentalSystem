@@ -7,12 +7,10 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
@@ -22,7 +20,6 @@ import javax.swing.border.EmptyBorder;
 
 import controller.CatalogoController;
 import controller.MainController;
-import model.EStatusVeiculo;
 
 public class VeiculoView extends JFrame {
 
@@ -48,7 +45,6 @@ public class VeiculoView extends JFrame {
 	private JTextField txtAnoFabricacao;
 	private JTextField txtCor;
 	private JTextField txtQuilometragem;
-	private JComboBox<EStatusVeiculo> cbbStatusVeiculo;
 	private JComboBox<String> cbbModeloVeiculo;
 	private JComboBox<String> cbbCategoriaVeiculo;
 	private JLabel lblFiltroPorCategoria;
@@ -61,7 +57,7 @@ public class VeiculoView extends JFrame {
 		setTitle("Veículo");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 440, 338);
+		setBounds(100, 100, 477, 352);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -124,7 +120,7 @@ public class VeiculoView extends JFrame {
 		});
 
 		textAreaList = new JTextArea();
-		textAreaList.setBounds(12, 60, 320, 193);
+		textAreaList.setBounds(12, 60, 438, 193);
 
 		listPane1.add(modelosList);
 		listPane1.add(textAreaList);
@@ -152,7 +148,7 @@ public class VeiculoView extends JFrame {
 		});
 
 		textAreaList2 = new JTextArea();
-		textAreaList2.setBounds(12, 60, 320, 193);
+		textAreaList2.setBounds(12, 60, 438, 193);
 
 		listPane2.add(categoriasList);
 		listPane2.add(textAreaList2);
@@ -175,9 +171,6 @@ public class VeiculoView extends JFrame {
 		JLabel lblCor = new JLabel("Cor");
 		lblCor.setBounds(12, 130, 71, 16);
 
-		JLabel lblStatus = new JLabel("Status");
-		lblStatus.setBounds(12, 199, 61, 16);
-
 		JLabel lblQuilometragem = new JLabel("Quilometragem");
 		lblQuilometragem.setBounds(12, 166, 130, 16);
 
@@ -197,10 +190,6 @@ public class VeiculoView extends JFrame {
 		txtQuilometragem.setBounds(134, 162, 86, 26);
 		txtQuilometragem.setColumns(10);
 
-		cbbStatusVeiculo = new JComboBox<>();
-		cbbStatusVeiculo.setBounds(134, 194, 130, 27);
-		cbbStatusVeiculo.setModel(new DefaultComboBoxModel<EStatusVeiculo>(EStatusVeiculo.values()));
-
 		cbbModeloVeiculo = new JComboBox<String>(new Vector<String>(controller.getModelos()));
 		cbbModeloVeiculo.setBounds(134, 94, 216, 27);
 
@@ -208,7 +197,7 @@ public class VeiculoView extends JFrame {
 		cbbCategoriaVeiculo.setBounds(133, 60, 216, 27);
 
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(101, 233, 117, 29);
+		btnSalvar.setBounds(100, 210, 117, 29);
 
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -217,7 +206,7 @@ public class VeiculoView extends JFrame {
 		});
 
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(218, 233, 117, 29);
+		btnCancelar.setBounds(216, 210, 117, 29);
 
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -234,9 +223,6 @@ public class VeiculoView extends JFrame {
 		formPane.add(lblCor);
 		formPane.add(txtCor);
 
-		formPane.add(lblStatus);
-		formPane.add(cbbStatusVeiculo);
-
 		formPane.add(cbbModeloVeiculo);
 		formPane.add(cbbCategoriaVeiculo);
 
@@ -247,36 +233,50 @@ public class VeiculoView extends JFrame {
 		formPane.add(btnCancelar);
 	}
 
-	private void actionSalvar() {
+	private void actionSalvar () {
 		CatalogoController controller = MainController.getCatalogoController();
 
 		try {
 			String placa = txtPlaca.getText();
+			if (!verificacoes.Verificacoes.validarPlaca(placa)) {
+				verificacoes.Verificacoes.exibirPopup("Erro", "Placa inválida!");
+				return;
+			}
 
-			int anoFabricacao = Integer.parseInt(txtAnoFabricacao.getText());
+			String anoFabricacaoStr = txtAnoFabricacao.getText();
+			int anoFabricacao = Integer.parseInt(anoFabricacaoStr);
+			if (verificacoes.Verificacoes.anoMaiorQueAtual(anoFabricacao)) {
+				verificacoes.Verificacoes.exibirPopup("Erro", "Ano inválido!");
+				return;
+			}
 
 			String cor = txtCor.getText();
 
-			EStatusVeiculo statusVeiculo = (EStatusVeiculo) cbbStatusVeiculo.getSelectedItem();
+			String quilometragemStr = txtQuilometragem.getText();
+			try {
+				int quilometragem = Integer.parseInt(quilometragemStr);
 
-			int quilometragem = Integer.parseInt(txtQuilometragem.getText());
+				String modeloVeiculo = (String) cbbModeloVeiculo.getSelectedItem();
 
-			String modeloVeiculo = (String) cbbModeloVeiculo.getSelectedItem();
+				String categoriaVeiculo = (String) cbbCategoriaVeiculo.getSelectedItem();
 
-			String categoriaVeiculo = (String) cbbCategoriaVeiculo.getSelectedItem();
+				if (!verificacoes.Verificacoes.verificarCamposPreenchidos(cor)) {
+					verificacoes.Verificacoes.exibirPopup("Erro", "Por favor, preencha todos os campos.");
+					return;
+				}
 
-			controller.addVeiculo(placa, anoFabricacao, cor, statusVeiculo, quilometragem, modeloVeiculo,
-					categoriaVeiculo);
+				controller.addVeiculo(placa, anoFabricacao, cor, quilometragem, modeloVeiculo, categoriaVeiculo);
+
+			} catch (NumberFormatException e) {
+				verificacoes.Verificacoes.exibirPopup("Erro",
+						"A quilometragem informada nao é valida, digite somente números");
+				return;
+			}
 
 		} catch (NumberFormatException e) {
-
-			JOptionPane.showMessageDialog(this, "Tipo inserido inválido!");
+			verificacoes.Verificacoes.exibirPopup("Erro", "O ano informado nao é valido, digite somente números");
 			return;
-
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-
 		limparForm();
 
 	}

@@ -1,5 +1,5 @@
 package model;
 
-public enum FormaPagamento {
+public enum EFormaPagamento {
 	DEBITO, CREDITO, PIX, DINHEIRO;
 }

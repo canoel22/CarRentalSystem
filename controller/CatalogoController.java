@@ -93,7 +93,7 @@ public class CatalogoController implements Serializable {
 		return lista;
 	}
 
-	public void addVeiculo(String placa, int anoFabricacao, String cor, EStatusVeiculo statusVeiculo, int quilometragem,
+	public void addVeiculo(String placa, int anoFabricacao, String cor, int quilometragem,
 			String modelo, String categoria) {
 
 		if (veiculos == null) {
@@ -106,9 +106,8 @@ public class CatalogoController implements Serializable {
 
 		Veiculo veiculo = new Veiculo(placa, cor, anoFabricacao, modelo1);
 		veiculo.setQuilometragem(quilometragem);
-		veiculo.setStatus(statusVeiculo);
+		veiculo.setStatus(EStatusVeiculo.DISPONIVEL);
 
-		// System.out.printf("%s\n", modelo1.getNome());
 		veiculos.put(veiculo.getPlaca(), veiculo);
 
 		if (modelo1 != null)

@@ -7,13 +7,13 @@ public class Pagamento implements Serializable{
 	
 	private static final long serialVersionUID = -4876013713910747039L;
 	
-	private final FormaPagamento tipo;
+	private final EFormaPagamento tipo;
 	private final Date data;
-	private final int valor;
+	private final double valor;
 	private final MotivoPagamento motivo;
 	private final String descricao;
 	
-	public Pagamento (FormaPagamento tipo, Date data, int valor, MotivoPagamento motivo, String descricao){
+	public Pagamento (EFormaPagamento tipo, Date data, double valor, MotivoPagamento motivo, String descricao){
 		this.tipo = tipo;
 		this.data = data;
 		this.valor = valor;
@@ -21,7 +21,7 @@ public class Pagamento implements Serializable{
 		this.descricao = descricao;
 	}
 
-	public FormaPagamento getTipo() {
+	public EFormaPagamento getTipo() {
 		return tipo;
 	}
 
@@ -29,7 +29,7 @@ public class Pagamento implements Serializable{
 		return data;
 	}
 
-	public int getValor() {
+	public double getValor() {
 		return valor;
 	}
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.UUID;
 
 import model.Locacao;
 import model.Pagamento;
@@ -14,9 +15,9 @@ public class LocacaoController implements Serializable {
 
 	private static final long serialVersionUID = -8942447860066317791L;
 
-	private Map<String, Reserva> reservas;
-	private Map<String, Locacao> locacoes;
-	private Map<String, Pagamento> pagamentos;
+	private Map<UUID, Reserva> reservas;
+	private Map<UUID, Locacao> locacoes;
+	private Map<UUID, Pagamento> pagamentos;
 
 	public LocacaoController() {
 
@@ -25,7 +26,7 @@ public class LocacaoController implements Serializable {
 		pagamentos = new TreeMap<>();
 	}
 
-	public void addReserva(int numReserva, String inicioReserva, String fimReserva, int valorTarifaDiaria,
+	public void addReserva( String inicioReserva, String fimReserva, int valorTarifaDiaria,
 			String categoria) {
 		// Categoria categoria1 = MainController.getCatalogoController().get(categoria);
 		// // retorna objeto Categoria para chave do map
@@ -41,17 +42,11 @@ public class LocacaoController implements Serializable {
 		// MainController.save();
 	}
 
-	public List<String> getReservaCliente(String nomeCliente) {
-		// Cliente cliente = clientes.get(nomeCliente);
-
-		// System.out.printf("%s", cliente.getNome());
-
+	public List<String> getReservas() {
 		List<String> lista = new ArrayList<>();
 
-		// for (Reserva reserva : cliente.getReserva())
-		// lista.add(String.format("%s\t%d\t%s\t%s\t%d\t%s\t", reserva.getNumReserva(),
-		// reserva.getInicioReserva(),
-		// reserva.getFimReserva(), reserva.getValorTarifaDiaria()));
+		for (Reserva reserva : reservas.values())
+			lista.add(String.format("%s\t%s\t", reserva.getNumReserva(), reserva.getCliente()));
 
 		return lista;
 

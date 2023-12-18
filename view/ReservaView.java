@@ -1,13 +1,17 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,9 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controller.ClienteController;
+import controller.CatalogoController;
 import controller.LocacaoController;
 import controller.MainController;
 
@@ -33,16 +38,18 @@ public class ReservaView extends JFrame {
 	private JPanel listPane; // Painel de Listagem de reservas por cliente
 
 	private JTextArea textAreaList;
-	private JComboBox<String> cbbClientes;
-	private JLabel lblClientes;
+	private JLabel lblReservas;
 
 	private JPanel formPane; // Painel de cadastro
 
-	private JTextField txtNumReserva;
+	private JComboBox<Long> cbbCliente;
 	private JTextField txtInicioReserva;
 	private JTextField txtFimReserva;
 	private JTextField txtValorTarifaDiaria;
 	private JComboBox<String> cbbCategoriasList;
+
+	JPanel segurosPane; // Painel de seguros
+	double valorInicial;
 
 	public ReservaView() {
 		initialize();
@@ -67,29 +74,24 @@ public class ReservaView extends JFrame {
 		listPane = new JPanel();
 
 		initFormPane();
-		initListPane();
+		//initListPane();
 
 		tabbedPane.add("Listagem", listPane);
 
-		lblClientes = new JLabel("Reservas por cliente");
-		lblClientes.setBounds(12, 27, 207, 15);
-		listPane.add(lblClientes);
+		lblReservas = new JLabel("Reservas");
+		lblReservas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReservas.setBounds(63, 12, 207, 15);
+		listPane.add(lblReservas);
 
 		tabbedPane.add("Cadastro", formPane);
 	}
 
 	private void initListPane() {
 
-		ClienteController controller = MainController.getClienteController();
-
 		listPane.setLayout(null);
 
-		cbbClientes = new JComboBox<String>(new Vector<String>(controller.getClientes()));
-
-		cbbClientes.setBounds(6, 21, 330, 27);
-
 		JButton btnListar = new JButton("Listar");
-		btnListar.setBounds(346, 20, 109, 29);
+		btnListar.setBounds(231, 5, 109, 29);
 
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -98,55 +100,83 @@ public class ReservaView extends JFrame {
 		});
 
 		textAreaList = new JTextArea();
-		textAreaList.setBounds(12, 60, 320, 193);
+		textAreaList.setBounds(12, 46, 401, 300);
 
-		listPane.add(lblClientes);
-		listPane.add(cbbClientes);
-
+		listPane.add(lblReservas);
 		listPane.add(btnListar);
+		listPane.add(textAreaList);
 	}
 
 	private void initFormPane() {
 
 		formPane.setLayout(null);
 
+		JLabel lblCliente = new JLabel("Cliente");
+		lblCliente.setBounds(12, 14, 144, 16);
+
 		JLabel lblNumReserva = new JLabel("Número de Reserva");
 		lblNumReserva.setBounds(12, 4, 144, 16);
 
 		JLabel lblInicioReserva = new JLabel("Inicio da reserva");
-		lblInicioReserva.setBounds(12, 33, 130, 16);
+		lblInicioReserva.setBounds(12, 55, 130, 16);
 
 		JLabel lblFimReserva = new JLabel("Fim da reserva");
-		lblFimReserva.setBounds(12, 63, 130, 16);
+		lblFimReserva.setBounds(12, 83, 130, 16);
 
-		JLabel lblValorTarifaDiaria = new JLabel("Valor da tarifa diária");
-		lblValorTarifaDiaria.setBounds(0, 140, 162, 16);
+		JLabel lblValorTarifaDiaria = new JLabel("Valor da tarifa");
+		lblValorTarifaDiaria.setBounds(12, 290, 162, 16);
 
 		JLabel lblCategoriasList = new JLabel("Categoria");
-		lblCategoriasList.setBounds(12, 99, 71, 16);
+		lblCategoriasList.setBounds(12, 123, 71, 16);
+
+		JLabel lblSeguros = new JLabel("Seguros");
+		lblSeguros.setBounds(12, 160, 71, 16);
+
+		cbbCliente = new JComboBox<Long>(new Vector<Long>(MainController.getClienteController().getClientes()));
+		cbbCliente.setBounds(158, 10, 216, 27);
 
 		cbbCategoriasList = new JComboBox<String>(
 				new Vector<String>(MainController.getCatalogoController().getCategorias()));
-		cbbCategoriasList.setBounds(134, 94, 216, 27);
-
-		txtNumReserva = new JTextField();
-		txtNumReserva.setBounds(158, 0, 130, 26);
-		txtNumReserva.setColumns(10);
+		cbbCategoriasList.setBounds(158, 120, 216, 27);
 
 		txtInicioReserva = new JTextField();
-		txtInicioReserva.setBounds(158, 29, 130, 26);
+		txtInicioReserva.setBounds(158, 50, 130, 26);
 		txtInicioReserva.setColumns(10);
 
 		txtFimReserva = new JTextField();
-		txtFimReserva.setBounds(158, 59, 130, 26);
+		txtFimReserva.setBounds(158, 80, 130, 26);
 		txtFimReserva.setColumns(10);
 
 		txtValorTarifaDiaria = new JTextField();
-		txtValorTarifaDiaria.setBounds(158, 136, 130, 26);
+		txtValorTarifaDiaria.setEnabled(false);
+		txtValorTarifaDiaria.setBounds(133, 285, 130, 26);
 		txtValorTarifaDiaria.setColumns(10);
 
+		JButton btnCalcValor = new JButton("Calcular valor");
+		btnCalcValor.setBounds(10, 250, 140, 29);
+
+		btnCalcValor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionCalcValor();
+			}
+		});
+
+		segurosPane = new JPanel();
+		segurosPane.setSize(216, 100);
+		segurosPane.setLocation(158, 150);
+		formPane.add(segurosPane, BorderLayout.CENTER);
+		segurosPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		cbbCategoriasList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearPanel();
+				initializeValorTarifa();
+				actionListarSeguros(segurosPane);
+			}
+		});
+
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(101, 233, 117, 29);
+		btnSalvar.setBounds(101, 323, 117, 29);
 
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -155,7 +185,7 @@ public class ReservaView extends JFrame {
 		});
 
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(218, 233, 117, 29);
+		btnCancelar.setBounds(218, 323, 117, 29);
 
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -163,8 +193,8 @@ public class ReservaView extends JFrame {
 			}
 		});
 
-		formPane.add(lblNumReserva);
-		formPane.add(txtNumReserva);
+		formPane.add(lblCliente);
+		formPane.add(cbbCliente);
 
 		formPane.add(lblInicioReserva);
 		formPane.add(txtInicioReserva);
@@ -177,17 +207,18 @@ public class ReservaView extends JFrame {
 
 		formPane.add(lblCategoriasList);
 		formPane.add(cbbCategoriasList);
-		
+
+		formPane.add(lblSeguros);
+
 		formPane.add(btnSalvar);
 		formPane.add(btnCancelar);
+		formPane.add(btnCalcValor);
 	}
 
 	private void actionSalvar() {
 		LocacaoController controller = MainController.getLocacaoController();
 
 		try {
-
-			int numReserva = Integer.parseInt(txtNumReserva.getText());
 
 			String inicioReserva = txtInicioReserva.getText();
 
@@ -197,28 +228,64 @@ public class ReservaView extends JFrame {
 
 			String categoria = (String) cbbCategoriasList.getSelectedItem();
 
-			controller.addReserva(numReserva, inicioReserva, fimReserva, valorTarifaDiaria, categoria);
+			controller.addReserva(inicioReserva, fimReserva, valorTarifaDiaria, categoria);
 
 		} catch (NumberFormatException e) {
 
 			JOptionPane.showMessageDialog(this, "Tipo inserido inválido!");
 			return;
 
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 
 		limparForm();
 
 	}
 
+	private void actionCalcValor() {
+		CatalogoController controller = MainController.getCatalogoController();
+		try {
+			double valorTarifa = valorInicial;
+			List<Double> segurosSelecionados = new ArrayList<>();
+			for (Component component : segurosPane.getComponents()) {
+
+				if (component instanceof JCheckBox) {
+					JCheckBox checkBox = (JCheckBox) component;
+
+					if (checkBox.isSelected()) {
+						String strPercentTarifa = checkBox.getText().replaceAll("[^0-9.]", "");
+
+						segurosSelecionados.add(Double.parseDouble(strPercentTarifa));
+					}
+				}
+			}
+			valorTarifa = controller.atualizaTarifa(valorTarifa, segurosSelecionados);
+			txtValorTarifaDiaria.setText(Double.toString(valorTarifa));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e);
+		}
+
+	}
+
+	private void initializeValorTarifa() {
+		CatalogoController controller = MainController.getCatalogoController();
+
+		String nomeCategoria = (String) cbbCategoriasList.getSelectedItem();
+		txtValorTarifaDiaria.setText(Double.toString(controller.getTarifa(nomeCategoria)));
+		valorInicial = Double.parseDouble(txtValorTarifaDiaria.getText());
+	}
+
+	protected void actionListarSeguros(JPanel segurosPanel) {
+		CatalogoController controller = MainController.getCatalogoController();
+
+		String nomeCategoria = (String) cbbCategoriasList.getSelectedItem();
+		controller.showSeguros(segurosPanel, nomeCategoria);
+	}
+
 	private void actionListar() {
 
 		LocacaoController controller = MainController.getLocacaoController();
 
-		String nomeCliente = (String) cbbClientes.getSelectedItem();
-
-		List<String> lista = controller.getReservaCliente(nomeCliente);
+		List<String> lista = controller.getReservas();
 
 		textAreaList.setText(null);
 
@@ -228,10 +295,15 @@ public class ReservaView extends JFrame {
 	}
 
 	private void limparForm() {
-		txtNumReserva.setText("");
 		txtInicioReserva.setText("");
 		txtFimReserva.setText("");
 		txtValorTarifaDiaria.setText("");
+	}
+
+	private void clearPanel() {
+		segurosPane.removeAll();
+		segurosPane.revalidate();
+		segurosPane.repaint();
 	}
 
 	private void actionCancelar() {

@@ -3,11 +3,12 @@ package controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
-import model.Cliente;
 import model.Endereco;
 import model.PessoaFisica;
 import model.PessoaJuridica;
@@ -17,14 +18,12 @@ public class ClienteController implements Serializable {
 	private static final long serialVersionUID = -2986449868123120251L;
 
 	private Map<String, Endereco> enderecos;
-	private Map<String, Cliente> clientes;
-	private Map<String, PessoaFisica> pessoasFisicas;
-	private Map<String, PessoaJuridica> pessoasJuridicas;
+	private Map<Long, PessoaFisica> pessoasFisicas;
+	private Map<Long, PessoaJuridica> pessoasJuridicas;
 
 	public ClienteController() {
 
 		enderecos = new TreeMap<>();
-		clientes = new TreeMap<>();
 		pessoasFisicas = new TreeMap<>();
 		pessoasJuridicas = new TreeMap<>();
 	}
@@ -41,13 +40,12 @@ public class ClienteController implements Serializable {
 		return endereco;
 	}
 
-	public List<String> getClientes() {
-		List<String> lista = new ArrayList<>();
-
-		for (Cliente cliente : clientes.values())
-			lista.add(String.format("%s\t%s\t", cliente.getNome()));
-
-		return lista;
+	public Set<Long> getClientes() {
+		Set<Long> pf = pessoasFisicas.keySet();
+		Set<Long> uniao = new HashSet<>(pf);
+		Set<Long> pj = pessoasJuridicas.keySet();
+		uniao.addAll(pj);
+		return uniao;
 	}
 
 	public void addPessoaFisica(String nome, String email, long telefone, Endereco endereco, long cpf, long cnh,
@@ -55,7 +53,7 @@ public class ClienteController implements Serializable {
 
 		PessoaFisica pessoa = new PessoaFisica(cpf, cnh, valCNH, nome, telefone, email, endereco);
 
-		pessoasFisicas.put(pessoa.getNome(), pessoa);
+		pessoasFisicas.put(pessoa.getCpf(), pessoa);
 
 		MainController.save();
 	}
@@ -74,7 +72,7 @@ public class ClienteController implements Serializable {
 
 		PessoaJuridica pessoa = new PessoaJuridica(cnpj, contato, nome, telefone, email, endereco);
 
-		pessoasJuridicas.put(pessoa.getNome(), pessoa);
+		pessoasJuridicas.put(pessoa.getCnpj(), pessoa);
 
 		MainController.save();
 	}

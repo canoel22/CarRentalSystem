@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+
 import model.Categoria;
 import model.EStatusVeiculo;
 import model.Modelo;
@@ -71,6 +74,18 @@ public class CatalogoController implements Serializable {
 		
 		MainController.save();
 	}
+	
+	public double getTarifa(String nomeCategoria) {
+		return categorias.get(nomeCategoria).getTarifaDiaria();
+	}
+	
+	public double atualizaTarifa(double tarifaAntiga, List<Double> percentSeguros) {
+		double novaTarifa = tarifaAntiga;
+		for (Double double1 : percentSeguros) {
+			novaTarifa += tarifaAntiga * double1 / 100;
+		}
+		return novaTarifa;
+	}
 
 	public Set<String> getSeguros() {
 		if (seguros == null) {
@@ -91,6 +106,15 @@ public class CatalogoController implements Serializable {
 			lista.add(String.format("%s\t%s\t", seguro.getDescricao(), seguro.getPercentualTarifa()));
 
 		return lista;
+	}
+	
+	public void showSeguros(JPanel segurosPanel, String nomeCategoria) {
+
+		for (Seguro seguro : categorias.get(nomeCategoria).getSeguros()) {
+			JCheckBox checkBox = new JCheckBox(seguro.toString());
+			segurosPanel.add(checkBox);
+		}
+
 	}
 
 	public void addVeiculo(String placa, int anoFabricacao, String cor, int quilometragem,

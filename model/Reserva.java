@@ -2,36 +2,42 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 public class Reserva implements Serializable {
 
 	private static final long serialVersionUID = 3094834473305359132L;
 
-	private final int numReserva;
-	private final String inicioReserva;
-	private final String fimReserva;
-	private final int valorTarifaDiaria;
+	private final UUID numReserva = UUID.randomUUID();
+	private final Date inicioReserva;
+	private final Date fimReserva;
+	private final double valorTarifaDiaria;
 
-	private Categoria categoria;
-	private ArrayList<Seguro> segurosContratados = new ArrayList<Seguro>();
+	private final Categoria categoria;
+	private final Cliente cliente;
+	private List<Seguro> segurosContratados = new ArrayList<Seguro>();
 
-	public Reserva(int numReserva, String inicioReserva, String fimReserva, int valorTarifaDiaria, Categoria categoria) {
-		this.numReserva = numReserva;
+	public Reserva(Date inicioReserva, Date fimReserva, double valorTarifaDiaria, Categoria categoria, Cliente cliente,
+			List<Seguro> segurosContratados) {
 		this.inicioReserva = inicioReserva;
 		this.fimReserva = fimReserva;
 		this.valorTarifaDiaria = valorTarifaDiaria;
 		this.categoria = categoria;
+		this.cliente = cliente;
+		this.segurosContratados = segurosContratados;
 	}
 
-	public int getNumReserva() {
+	public UUID getNumReserva() {
 		return numReserva;
 	}
 
-	public String getInicioReserva() {
+	public Date getInicioReserva() {
 		return inicioReserva;
 	}
 
-	public ArrayList<Seguro> getSegurosContratados() {
+	public List<Seguro> getSegurosContratados() {
 		return segurosContratados;
 	}
 
@@ -39,11 +45,11 @@ public class Reserva implements Serializable {
 		this.segurosContratados = segurosContratados;
 	}
 
-	public String getFimReserva() {
+	public Date getFimReserva() {
 		return fimReserva;
 	}
 
-	public int getValorTarifaDiaria() {
+	public double getValorTarifaDiaria() {
 		return valorTarifaDiaria;
 	}
 
@@ -51,8 +57,8 @@ public class Reserva implements Serializable {
 		return categoria;
 	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
 }

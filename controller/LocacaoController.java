@@ -2,6 +2,7 @@ package controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -10,6 +11,7 @@ import java.util.UUID;
 import model.Locacao;
 import model.Pagamento;
 import model.Reserva;
+import model.Seguro;
 
 public class LocacaoController implements Serializable {
 
@@ -26,20 +28,21 @@ public class LocacaoController implements Serializable {
 		pagamentos = new TreeMap<>();
 	}
 
-	public void addReserva( String inicioReserva, String fimReserva, int valorTarifaDiaria,
-			String categoria) {
-		// Categoria categoria1 = MainController.getCatalogoController().get(categoria);
-		// // retorna objeto Categoria para chave do map
+	public UUID addReserva(String cliente, Date inicioReserva, Date fimReserva, String categoria,
+			List<Seguro> segurosSelecionados, double valorTarifaDiaria) {
 
-		// Reserva reserva = new Reserva(numReserva, inicioReserva, fimReserva,
-		// valorTarifaDiaria, categoria1);
+		ClienteController clienteController = MainController.getClienteController();
+		CatalogoController catalogoController = MainController.getCatalogoController();
 
-		// reservas.put(reserva.getNumReserva(), reserva);
+		Reserva reserva = new Reserva(inicioReserva, fimReserva, valorTarifaDiaria,
+				catalogoController.getCategoriaNome(categoria), clienteController.getCliente(cliente),
+				segurosSelecionados);
 
-		// if (categoria1 != null)
-		// categoria1.addReserva(reserva);
+		reservas.put(reserva.getNumReserva(), reserva);
 
-		// MainController.save();
+		MainController.save();
+
+		return reserva.getNumReserva();
 	}
 
 	public List<String> getReservas() {

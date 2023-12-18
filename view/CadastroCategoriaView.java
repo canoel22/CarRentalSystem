@@ -103,6 +103,8 @@ public class CadastroCategoriaView extends JFrame {
 			Double tarifaDiaria = Double.parseDouble(tarifaDiariaStr);
 	
 			controller.addCategoria(nome, tarifaDiaria);
+			verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
+
 			
 		} catch (NumberFormatException e) {
 			verificacoes.Verificacoes.exibirPopup("Erro",

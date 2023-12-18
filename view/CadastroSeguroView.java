@@ -178,6 +178,8 @@ public class CadastroSeguroView extends JFrame {
 			}
 
 			controller.addSeguro(descricao, percentualTarifa, categoria);
+			verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
+
 
 		} catch (NumberFormatException e) {
 			verificacoes.Verificacoes.exibirPopup("Erro",

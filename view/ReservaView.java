@@ -6,8 +6,12 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -26,6 +30,7 @@ import javax.swing.border.EmptyBorder;
 import controller.CatalogoController;
 import controller.LocacaoController;
 import controller.MainController;
+import model.Seguro;
 
 public class ReservaView extends JFrame {
 
@@ -74,14 +79,9 @@ public class ReservaView extends JFrame {
 		listPane = new JPanel();
 
 		initFormPane();
-		//initListPane();
+		initListPane();
 
 		tabbedPane.add("Listagem", listPane);
-
-		lblReservas = new JLabel("Reservas");
-		lblReservas.setHorizontalAlignment(SwingConstants.CENTER);
-		lblReservas.setBounds(63, 12, 207, 15);
-		listPane.add(lblReservas);
 
 		tabbedPane.add("Cadastro", formPane);
 	}
@@ -90,12 +90,17 @@ public class ReservaView extends JFrame {
 
 		listPane.setLayout(null);
 
+		lblReservas = new JLabel("Reservas");
+		lblReservas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReservas.setBounds(63, 12, 207, 15);
+
 		JButton btnListar = new JButton("Listar");
 		btnListar.setBounds(231, 5, 109, 29);
 
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionListar();
+				System.out.println("oi");
 			}
 		});
 
@@ -170,7 +175,7 @@ public class ReservaView extends JFrame {
 		cbbCategoriasList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clearPanel();
-				initializeValorTarifa();
+				iniciaValorTarifa();
 				actionListarSeguros(segurosPane);
 			}
 		});
@@ -218,23 +223,38 @@ public class ReservaView extends JFrame {
 	private void actionSalvar() {
 		LocacaoController controller = MainController.getLocacaoController();
 
+		String cliente = (String) cbbCliente.getSelectedItem();
+		String inicioReservaStr = txtInicioReserva.getText();
+		String formatoData = "dd/MM/yyyy";
+		SimpleDateFormat formato = new SimpleDateFormat(formatoData);
 		try {
+			Date inicioReserva = formato.parse(inicioReservaStr);
 
-			String inicioReserva = txtInicioReserva.getText();
+			String fimReservaStr = txtFimReserva.getText();
+			SimpleDateFormat formato2 = new SimpleDateFormat(formatoData);
+			try {
+				Date fimReserva = formato2.parse(fimReservaStr);
 
-			String fimReserva = txtFimReserva.getText();
+				actionCalcValor();
+				double valorTarifaDiaria = Double.parseDouble(txtValorTarifaDiaria.getText());
 
-			int valorTarifaDiaria = Integer.parseInt(txtValorTarifaDiaria.getText());
+				String categoria = (String) cbbCategoriasList.getSelectedItem();
 
-			String categoria = (String) cbbCategoriasList.getSelectedItem();
+				List<Seguro> segurosSelecionados = new ArrayList<>();
+				segurosSelecionados = MainController.getCatalogoController().getSegurosSelecionados(segurosPane,
+						categoria);
 
-			controller.addReserva(inicioReserva, fimReserva, valorTarifaDiaria, categoria);
+				UUID numReserva = controller.addReserva(cliente, inicioReserva, fimReserva, categoria,
+						segurosSelecionados, valorTarifaDiaria);
+				verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso! Seu UUID é " + numReserva);
 
-		} catch (NumberFormatException e) {
-
-			JOptionPane.showMessageDialog(this, "Tipo inserido inválido!");
+			} catch (ParseException e) {
+				verificacoes.Verificacoes.exibirPopup("Erro", "Data inválida! Insira como: dd/mm/aaaa");
+				return;
+			}
+		} catch (ParseException e) {
+			verificacoes.Verificacoes.exibirPopup("Erro", "Data inválida! Insira como: dd/mm/aaaa");
 			return;
-
 		}
 
 		limparForm();
@@ -244,6 +264,7 @@ public class ReservaView extends JFrame {
 	private void actionCalcValor() {
 		CatalogoController controller = MainController.getCatalogoController();
 		try {
+
 			double valorTarifa = valorInicial;
 			List<Double> segurosSelecionados = new ArrayList<>();
 			for (Component component : segurosPane.getComponents()) {
@@ -266,7 +287,7 @@ public class ReservaView extends JFrame {
 
 	}
 
-	private void initializeValorTarifa() {
+	private void iniciaValorTarifa() {
 		CatalogoController controller = MainController.getCatalogoController();
 
 		String nomeCategoria = (String) cbbCategoriasList.getSelectedItem();

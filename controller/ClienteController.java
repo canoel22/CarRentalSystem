@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import model.Cliente;
 import model.Endereco;
 import model.PessoaFisica;
 import model.PessoaJuridica;
@@ -46,6 +47,15 @@ public class ClienteController implements Serializable {
 		Set<Long> pj = pessoasJuridicas.keySet();
 		uniao.addAll(pj);
 		return uniao;
+	}
+
+	public Cliente getCliente(String CPF_CNPJStr) {
+		Long CPF_CNPJ = Long.parseLong(CPF_CNPJStr);
+		
+		if (pessoasFisicas.containsKey(CPF_CNPJ)) {
+			return (Cliente) pessoasFisicas.get(CPF_CNPJ);
+		}
+		return (Cliente) pessoasJuridicas.get(CPF_CNPJ);
 	}
 
 	public void addPessoaFisica(String nome, String email, long telefone, Endereco endereco, long cpf, long cnh,

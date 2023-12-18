@@ -123,6 +123,8 @@ public class CadastroModeloView extends JFrame {
 			}
 	
 			controller.addModelo(nome, anoModelo, fabricante);
+			verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
+
 			
 		} catch (NumberFormatException e) {
 			verificacoes.Verificacoes.exibirPopup("Erro", "O ano informado nao é válido, digite somente números");

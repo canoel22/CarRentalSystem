@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Component;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,10 @@ public class CatalogoController implements Serializable {
 			categorias = new TreeMap<>();
 		}
 		return categorias.keySet(); // retorna lista das chaves do map categorias
-
+	}
+	
+	public Categoria getCategoriaNome(String nome) {
+		return categorias.get(nome);
 	}
 
 	public void addSeguro(String descricao, int percentualTarifa, String categoria) {
@@ -71,14 +75,14 @@ public class CatalogoController implements Serializable {
 
 		if (categoria1 != null)
 			categoria1.addSeguro(seguro);
-		
+
 		MainController.save();
 	}
-	
+
 	public double getTarifa(String nomeCategoria) {
 		return categorias.get(nomeCategoria).getTarifaDiaria();
 	}
-	
+
 	public double atualizaTarifa(double tarifaAntiga, List<Double> percentSeguros) {
 		double novaTarifa = tarifaAntiga;
 		for (Double double1 : percentSeguros) {
@@ -87,14 +91,30 @@ public class CatalogoController implements Serializable {
 		return novaTarifa;
 	}
 
-	public Set<String> getSeguros() {
-		if (seguros == null) {
-			seguros = new TreeMap<>();
-		}
-		return seguros.keySet(); // retorna lista das chaves do map categorias
+	public List<Seguro> getSegurosSelecionados(JPanel segurosPane, String nomeCategoria) {
+		List<Seguro> seguros = new ArrayList<>();
+		CatalogoController catalogoController = MainController.getCatalogoController();
 
+		Categoria cat = catalogoController.getCategoriaNome(nomeCategoria);
+
+		for (Component component : segurosPane.getComponents()) {
+
+			if (component instanceof JCheckBox) {
+				JCheckBox seguroBox = (JCheckBox) component;
+
+				if (seguroBox.isSelected()) {
+					for (Seguro seguro : cat.getSeguros()) {
+						if (seguroBox.getText() == seguro.toString()) {
+							seguros.add(seguro);
+							break;
+						}
+					}
+				}
+			}
+		}
+		return seguros;
 	}
-	
+
 	public List<String> getSegurosCat(String nomeCategoria) {
 		Categoria categoria = categorias.get(nomeCategoria);
 
@@ -107,18 +127,18 @@ public class CatalogoController implements Serializable {
 
 		return lista;
 	}
-	
+
 	public void showSeguros(JPanel segurosPanel, String nomeCategoria) {
 
 		for (Seguro seguro : categorias.get(nomeCategoria).getSeguros()) {
-			JCheckBox checkBox = new JCheckBox(seguro.toString());
+			JCheckBox checkBox = new JCheckBox(String.format("%s\t%s\t", seguro.getDescricao(), seguro.getPercentualTarifa()));
 			segurosPanel.add(checkBox);
 		}
 
 	}
 
-	public void addVeiculo(String placa, int anoFabricacao, String cor, int quilometragem,
-			String modelo, String categoria) {
+	public void addVeiculo(String placa, int anoFabricacao, String cor, int quilometragem, String modelo,
+			String categoria) {
 
 		if (veiculos == null) {
 			veiculos = new TreeMap<>();

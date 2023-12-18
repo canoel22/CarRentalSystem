@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Categoria implements Serializable {
 
@@ -10,27 +11,27 @@ public class Categoria implements Serializable {
 	private final String nome;
 	private double tarifaDiaria;
 
-	private ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
-	private ArrayList<Seguro> seguros = new ArrayList<Seguro>();
+	private List<Veiculo> veiculos = new ArrayList<Veiculo>();
+	private List<Seguro> seguros = new ArrayList<Seguro>();
 
 	public Categoria(String nome, double tarifaDiaria) {
 		this.nome = nome;
 		this.tarifaDiaria = tarifaDiaria;
 	}
 
-	public ArrayList<Veiculo> getVeiculos() {
+	public List<Veiculo> getVeiculos() {
 		return veiculos;
 	}
 
-	public void setVeiculos(ArrayList<Veiculo> veiculos) {
+	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;
 	}
 
-	public ArrayList<Seguro> getSeguros() {
+	public List<Seguro> getSeguros() {
 		return seguros;
 	}
 
-	public void setSeguros(ArrayList<Seguro> seguros) {
+	public void setSeguros(List<Seguro> seguros) {
 		this.seguros = seguros;
 	}
 

@@ -381,7 +381,7 @@ public class ClienteView extends JFrame {
 				String complemento = txtComplemento.getText();
 
 				if (!verificacoes.Verificacoes.verificarCamposPreenchidos(nome, rua, bairro, cidade, complemento)) {
-					verificacoes.Verificacoes.exibirPopup("Erro","Por favor, preencha todos os campos.");
+					verificacoes.Verificacoes.exibirPopup("Erro", "Por favor, preencha todos os campos.");
 					return;
 				}
 
@@ -420,10 +420,11 @@ public class ClienteView extends JFrame {
 							}
 
 							controller.addPessoaFisica(nome, email, telefone, endereco, cpf, cnh, valCNH);
+							verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
 							System.out.printf("Cadastrou fisica");
 
 						} catch (ParseException e) {
-							verificacoes.Verificacoes.exibirPopup("Erro", "Data inválida!");
+							verificacoes.Verificacoes.exibirPopup("Erro", "Data inválida! Insira como: dd/mm/aaaa");
 							return;
 						}
 
@@ -444,6 +445,7 @@ public class ClienteView extends JFrame {
 					String contato = txtContato.getText();
 
 					controller.addPessoaJuridica(nome, email, telefone, endereco, cnpj, contato);
+					verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
 					System.out.printf("Cadastrou juridica");
 
 					if (!verificacoes.Verificacoes.verificarCamposPreenchidos(contato)) {

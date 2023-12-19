@@ -25,6 +25,7 @@ public class MenuView extends JFrame {
 	private JRadioButton jRadioButton6;
 	private JRadioButton jRadioButton7;
 	private JRadioButton jRadioButton8;
+	private JRadioButton jRadioButton9;
 
 	public MenuView() {
 		initialize();
@@ -80,9 +81,14 @@ public class MenuView extends JFrame {
 		this.add(jRadioButton7);
 
 		jRadioButton8 = new JRadioButton();
-		jRadioButton8.setText("Liberação manutenção");
+		jRadioButton8.setText("Limpeza");
 		jRadioButton8.setBounds(100, 220, 300, 21);
 		this.add(jRadioButton8);
+
+		jRadioButton9 = new JRadioButton();
+		jRadioButton9.setText("Manutenção");
+		jRadioButton9.setBounds(100, 240, 300, 21);
+		this.add(jRadioButton9);
 
 		G1.add(jRadioButton);
 		G1.add(jRadioButton1);
@@ -93,6 +99,7 @@ public class MenuView extends JFrame {
 		G1.add(jRadioButton6);
 		G1.add(jRadioButton7);
 		G1.add(jRadioButton8);
+		G1.add(jRadioButton9);
 
 		JButton btnNewButton = new JButton("OK");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -146,8 +153,12 @@ public class MenuView extends JFrame {
 			pagamentoView.setVisible(true);
 
 		} else if (jRadioButton8.isSelected()) {
-			// FimLocacaoView fimLocacaoView = new FimLocacaoView();
-			// fimLocacaoView.setVisible(true);
+			LimpezaView limpezaView = new LimpezaView();
+			limpezaView.setVisible(true);
+
+		} else if (jRadioButton9.isSelected()) {
+			ManutencaoView manutencaoView = new ManutencaoView();
+			manutencaoView.setVisible(true);
 
 		}
 	}

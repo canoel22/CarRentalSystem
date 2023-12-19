@@ -134,6 +134,18 @@ public class LocacaoController implements Serializable {
 		}
 		return lista;
 	}
+	
+	public List<UUID> getDevolucoesUUID() {
+		List<UUID> lista = new ArrayList<>();
+
+		for (UUID locacao : locacoes.keySet()) {
+			if (locacoes.get(locacao).getDataHoraDevolucao() != null) { // pega as locações que ainda não tiveram
+																		// devolução
+				lista.add(locacao);
+			}
+		}
+		return lista;
+	}
 
 	public boolean addDevolucao(UUID locacao, Long kmDevolucao, String dataFimStr, String horaFimStr) {
 

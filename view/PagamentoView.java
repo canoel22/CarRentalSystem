@@ -48,7 +48,7 @@ public class PagamentoView extends JFrame {
 		setTitle("Pagamento");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 350);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -59,7 +59,7 @@ public class PagamentoView extends JFrame {
 		lblLocacao = new JLabel("UUID da locação:");
 		lblLocacao.setBounds(12, 17, 176, 16);
 
-		cbbLocacao = new JComboBox<UUID>(new Vector<UUID>(MainController.getLocacaoController().getLocacoesUUID()));
+		cbbLocacao = new JComboBox<UUID>(new Vector<UUID>(MainController.getLocacaoController().getDevolucoesUUID()));
 		cbbLocacao.setBounds(177, 12, 216, 27);
 
 		lblTipoPgt = new JLabel("Forma de pagamento:");
@@ -87,14 +87,14 @@ public class PagamentoView extends JFrame {
 		});
 
 		lblDescricaoPgt = new JLabel("Descrição do pagamento:");
-		lblDescricaoPgt.setBounds(6, 30, 176, 16);
+		lblDescricaoPgt.setBounds(12, 208, 196, 16);
 
 		txtDescricaoPgt = new JTextField();
-		txtDescricaoPgt.setBounds(122, 30, 176, 26);
+		txtDescricaoPgt.setBounds(204, 204, 176, 26);
 		txtDescricaoPgt.setColumns(20);
 
 		btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(150, 201, 117, 29);
+		btnSalvar.setBounds(149, 256, 117, 29);
 
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -120,6 +120,9 @@ public class PagamentoView extends JFrame {
 		contentPane.add(lblValor);
 		contentPane.add(txtValor);
 
+		contentPane.add(lblDescricaoPgt);
+		contentPane.add(txtDescricaoPgt);
+		
 		contentPane.add(lblMotivoPgt);
 		contentPane.add(cbbMotivoPgt);
 
@@ -175,6 +178,9 @@ public class PagamentoView extends JFrame {
 		} else if (cbbMotivoPgt.getSelectedItem() == EMotivoPagamento.REPAROS) {
 			txtValor.setText("300");
 			txtValor.setEditable(false);
+		} else if (cbbMotivoPgt.getSelectedItem() == EMotivoPagamento.MULTA) {
+			txtValor.setText("Digite o valor da multa");
+			txtValor.setEditable(true);
 		}
 	}
 

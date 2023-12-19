@@ -12,7 +12,6 @@ import javax.swing.JRadioButton;
 
 public class MenuView extends JFrame {
 
-
 	private static final long serialVersionUID = 1469409378012632272L;
 
 	private ButtonGroup G1;
@@ -27,7 +26,6 @@ public class MenuView extends JFrame {
 	private JRadioButton jRadioButton7;
 	private JRadioButton jRadioButton8;
 	private JRadioButton jRadioButton9;
-	private JRadioButton jRadioButton10;
 
 	public MenuView() {
 		initialize();
@@ -61,12 +59,11 @@ public class MenuView extends JFrame {
 		jRadioButton3.setText("Cadastro Modelo");
 		jRadioButton3.setBounds(100, 120, 300, 21);
 		this.add(jRadioButton3);
-		
+
 		jRadioButton4 = new JRadioButton();
 		jRadioButton4.setText("Cadastro Categoria");
 		jRadioButton4.setBounds(100, 140, 300, 21);
 		this.add(jRadioButton4);
-
 
 		jRadioButton5 = new JRadioButton();
 		jRadioButton5.setText("Reserva");
@@ -74,29 +71,24 @@ public class MenuView extends JFrame {
 		this.add(jRadioButton5);
 
 		jRadioButton6 = new JRadioButton();
-		jRadioButton6.setText("Início locação");
-		jRadioButton6.setBounds(100, 160, 300, 21);
+		jRadioButton6.setText("Locação");
+		jRadioButton6.setBounds(100, 180, 300, 21);
 		this.add(jRadioButton6);
 
 		jRadioButton7 = new JRadioButton();
-		jRadioButton7.setText("Fim locação");
-		jRadioButton7.setBounds(100, 180, 300, 21);
+		jRadioButton7.setText("Pagamento");
+		jRadioButton7.setBounds(100, 200, 300, 21);
 		this.add(jRadioButton7);
 
 		jRadioButton8 = new JRadioButton();
-		jRadioButton8.setText("Pagamento");
-		jRadioButton8.setBounds(100, 200, 300, 21);
+		jRadioButton8.setText("Pagamento extra");
+		jRadioButton8.setBounds(100, 220, 300, 21);
 		this.add(jRadioButton8);
 
 		jRadioButton9 = new JRadioButton();
-		jRadioButton9.setText("Pagamento extra");
-		jRadioButton9.setBounds(100, 220, 300, 21);
+		jRadioButton9.setText("Liberação manutenção");
+		jRadioButton9.setBounds(100, 240, 300, 21);
 		this.add(jRadioButton9);
-
-		jRadioButton10 = new JRadioButton();
-		jRadioButton10.setText("Liberação manutenção");
-		jRadioButton10.setBounds(100, 240, 300, 21);
-		this.add(jRadioButton10);
 
 		G1.add(jRadioButton);
 		G1.add(jRadioButton1);
@@ -108,7 +100,6 @@ public class MenuView extends JFrame {
 		G1.add(jRadioButton7);
 		G1.add(jRadioButton8);
 		G1.add(jRadioButton9);
-		G1.add(jRadioButton10);
 
 		JButton btnNewButton = new JButton("OK");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -144,7 +135,7 @@ public class MenuView extends JFrame {
 		} else if (jRadioButton3.isSelected()) {
 			CadastroModeloView cadastroModeloView = new CadastroModeloView();
 			cadastroModeloView.setVisible(true);
-			
+
 		} else if (jRadioButton4.isSelected()) {
 			CadastroCategoriaView categoriaView = new CadastroCategoriaView();
 			categoriaView.setVisible(true);
@@ -154,24 +145,20 @@ public class MenuView extends JFrame {
 			reservaView.setVisible(true);
 
 		} else if (jRadioButton6.isSelected()) {
-			//InicioLocacaoView inicioLocacaoView = new InicioLocacaoView();
-			//inicioLocacaoView.setVisible(true);
+			LocacaoView locacaoView = new LocacaoView();
+			locacaoView.setVisible(true);
 
 		} else if (jRadioButton7.isSelected()) {
-			//FimLocacaoView fimLocacaoView = new FimLocacaoView();
-			//fimLocacaoView.setVisible(true);
+			// FimLocacaoView fimLocacaoView = new FimLocacaoView();
+			// fimLocacaoView.setVisible(true);
 
 		} else if (jRadioButton8.isSelected()) {
-			//PagamentoView pagamentoView = new PagamentoView();
-			//pagamentoView.setVisible(true);
+			// PagamentoView pagamentoView = new PagamentoView();
+			// pagamentoView.setVisible(true);
 
 		} else if (jRadioButton9.isSelected()) {
-			//PagamentoExtraView pagamentoExtraView = new PagamentoExtraView();
-			//pagamentoExtraView.setVisible(true);
-
-		} else if (jRadioButton10.isSelected()) {
-			//ManutencaoView manutencaoView = new ManutencaoView();
-			//manutencaoView.setVisible(true);
+			// PagamentoExtraView pagamentoExtraView = new PagamentoExtraView();
+			// pagamentoExtraView.setVisible(true);
 		}
 	}
 

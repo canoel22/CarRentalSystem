@@ -1,5 +1,5 @@
 package model;
 
-public enum MotivoPagamento {
+public enum EMotivoPagamento {
 	LOCACAO, MULTA, REPAROS, LIMPEZA;
 }

@@ -128,7 +128,7 @@ public class ReservaView extends JFrame {
 		JLabel lblFimReserva = new JLabel("Fim da reserva");
 		lblFimReserva.setBounds(12, 83, 130, 16);
 
-		JLabel lblValorTarifaDiaria = new JLabel("Valor da tarifa");
+		JLabel lblValorTarifaDiaria = new JLabel("Valor da tarifa diária");
 		lblValorTarifaDiaria.setBounds(12, 290, 162, 16);
 
 		JLabel lblCategoriasList = new JLabel("Categoria");
@@ -154,7 +154,7 @@ public class ReservaView extends JFrame {
 
 		txtValorTarifaDiaria = new JTextField();
 		txtValorTarifaDiaria.setEnabled(false);
-		txtValorTarifaDiaria.setBounds(133, 285, 130, 26);
+		txtValorTarifaDiaria.setBounds(173, 285, 130, 26);
 		txtValorTarifaDiaria.setColumns(10);
 
 		JButton btnCalcValor = new JButton("Calcular valor");
@@ -223,7 +223,7 @@ public class ReservaView extends JFrame {
 	private void actionSalvar() {
 		LocacaoController controller = MainController.getLocacaoController();
 
-		String cliente = (String) cbbCliente.getSelectedItem();
+		Long cliente = (Long) cbbCliente.getSelectedItem();
 		String inicioReservaStr = txtInicioReserva.getText();
 		String formatoData = "dd/MM/yyyy";
 		SimpleDateFormat formato = new SimpleDateFormat(formatoData);
@@ -234,6 +234,10 @@ public class ReservaView extends JFrame {
 			SimpleDateFormat formato2 = new SimpleDateFormat(formatoData);
 			try {
 				Date fimReserva = formato2.parse(fimReservaStr);
+				if (!fimReserva.after(inicioReserva)) {
+					verificacoes.Verificacoes.exibirPopup("Erro", "Insira um intervalo de datas válido!");
+					return;
+				}
 
 				actionCalcValor();
 				double valorTarifaDiaria = Double.parseDouble(txtValorTarifaDiaria.getText());
@@ -246,7 +250,8 @@ public class ReservaView extends JFrame {
 
 				UUID numReserva = controller.addReserva(cliente, inicioReserva, fimReserva, categoria,
 						segurosSelecionados, valorTarifaDiaria);
-				verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso! Seu UUID é " + numReserva);
+				verificacoes.Verificacoes.exibirPopupSucesso("Sucesso",
+						"Cadastro realizado com sucesso! Seu UUID é " + numReserva);
 
 			} catch (ParseException e) {
 				verificacoes.Verificacoes.exibirPopup("Erro", "Data inválida! Insira como: dd/mm/aaaa");

@@ -22,6 +22,20 @@ public class Categoria implements Serializable {
 	public List<Veiculo> getVeiculos() {
 		return veiculos;
 	}
+	
+	public List<String> getVeiculosDisponiveis() {
+
+		List<String> lista = new ArrayList<>();
+
+		for (Veiculo veiculo : veiculos) {
+			if (veiculo.getStatus() == EStatusVeiculo.DISPONIVEL) {
+				lista.add(String.format("%s  %s %s(%d)", veiculo.getPlaca(), veiculo.getModelo().getNome(),
+						veiculo.getCor(), veiculo.getAnoFabricacao()));
+			}
+		}
+		return lista;
+	}
+
 
 	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;

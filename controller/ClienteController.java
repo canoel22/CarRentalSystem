@@ -49,9 +49,8 @@ public class ClienteController implements Serializable {
 		return uniao;
 	}
 
-	public Cliente getCliente(String CPF_CNPJStr) {
-		Long CPF_CNPJ = Long.parseLong(CPF_CNPJStr);
-		
+	public Cliente getCliente(Long CPF_CNPJ) {
+
 		if (pessoasFisicas.containsKey(CPF_CNPJ)) {
 			return (Cliente) pessoasFisicas.get(CPF_CNPJ);
 		}

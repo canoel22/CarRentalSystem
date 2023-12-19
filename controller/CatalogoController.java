@@ -57,7 +57,7 @@ public class CatalogoController implements Serializable {
 		}
 		return categorias.keySet(); // retorna lista das chaves do map categorias
 	}
-	
+
 	public Categoria getCategoriaNome(String nome) {
 		return categorias.get(nome);
 	}
@@ -131,7 +131,8 @@ public class CatalogoController implements Serializable {
 	public void showSeguros(JPanel segurosPanel, String nomeCategoria) {
 
 		for (Seguro seguro : categorias.get(nomeCategoria).getSeguros()) {
-			JCheckBox checkBox = new JCheckBox(String.format("%s\t%s\t", seguro.getDescricao(), seguro.getPercentualTarifa()));
+			JCheckBox checkBox = new JCheckBox(
+					String.format("%s\t%s\t", seguro.getDescricao(), seguro.getPercentualTarifa()));
 			segurosPanel.add(checkBox);
 		}
 
@@ -163,17 +164,6 @@ public class CatalogoController implements Serializable {
 		MainController.save();
 	}
 
-	public List<String> getVeiculos() {
-
-		List<String> lista = new ArrayList<>();
-
-		for (Veiculo veiculo : veiculos.values())
-			lista.add(String.format("%s\t%d\t%s\t%s\t%d\t%s\t", veiculo.getPlaca(), veiculo.getAnoFabricacao(),
-					veiculo.getCor(), veiculo.getStatus().name(), veiculo.getQuilometragem(),
-					veiculo.getModelo().getNome()));
-
-		return lista;
-	}
 
 	public List<String> getVeiculosMod(String nomeModelo) {
 
@@ -205,6 +195,10 @@ public class CatalogoController implements Serializable {
 					veiculo.getModelo().getNome()));
 
 		return lista;
+	}
+
+	public Veiculo getVeiculo(String placa) {
+		return veiculos.get(placa);
 	}
 
 }

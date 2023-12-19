@@ -8,14 +8,13 @@ public class Pagamento implements Serializable{
 	private static final long serialVersionUID = -4876013713910747039L;
 	
 	private final EFormaPagamento tipo;
-	private final Date data;
+	private final Date data = new Date();
 	private final double valor;
-	private final MotivoPagamento motivo;
+	private final EMotivoPagamento motivo;
 	private final String descricao;
 	
-	public Pagamento (EFormaPagamento tipo, Date data, double valor, MotivoPagamento motivo, String descricao){
+	public Pagamento (EFormaPagamento tipo, double valor, EMotivoPagamento motivo, String descricao){
 		this.tipo = tipo;
-		this.data = data;
 		this.valor = valor;
 		this.motivo = motivo;
 		this.descricao = descricao;
@@ -33,7 +32,7 @@ public class Pagamento implements Serializable{
 		return valor;
 	}
 
-	public MotivoPagamento getMotivo() {
+	public EMotivoPagamento getMotivo() {
 		return motivo;
 	}
 

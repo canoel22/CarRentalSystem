@@ -7,6 +7,9 @@ import java.util.stream.IntStream;
 
 import javax.swing.JOptionPane;
 
+import controller.ClienteController;
+import controller.MainController;
+
 public class Verificacoes {
 
 	public static void exibirPopup(String titulo, String mensagem) {
@@ -107,5 +110,13 @@ public class Verificacoes {
 		int anoAtual = calAtual.get(Calendar.YEAR);
 
 		return ano > anoAtual;
+	}
+	
+	public static boolean temCliente (Long condutor) {
+		ClienteController clienteController = MainController.getClienteController();
+		if (clienteController.getCliente(condutor) != null){
+			return true;
+		}
+		return false;
 	}
 }

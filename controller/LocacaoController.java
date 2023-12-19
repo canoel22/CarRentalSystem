@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import model.EFormaPagamento;
+import model.EMotivoPagamento;
 import model.EStatusVeiculo;
 import model.Locacao;
 import model.Pagamento;
@@ -106,6 +109,10 @@ public class LocacaoController implements Serializable {
 
 	}
 
+	public Locacao getLocacao(UUID numLocacao) {
+		return locacoes.get(numLocacao);
+	}
+
 	public List<String> getLocacoes() {
 		List<String> lista = new ArrayList<>();
 
@@ -131,7 +138,7 @@ public class LocacaoController implements Serializable {
 	public boolean addDevolucao(UUID locacao, Long kmDevolucao, String dataFimStr, String horaFimStr) {
 
 		Locacao locacao1 = locacoes.get(locacao);
-		
+
 		String dataHoraStr = dataFimStr + " " + horaFimStr;
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		try {
@@ -148,6 +155,29 @@ public class LocacaoController implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean addPagamento(UUID locacao, double valor, EFormaPagamento tipo, EMotivoPagamento motivo,
+			String descricao) {
+		Locacao locacao1 = locacoes.get(locacao);
+
+		pagamentos.put(locacao, new Pagamento(tipo, valor, motivo, descricao));
+		locacao1.addPagamento(tipo, valor, motivo, descricao);
+
+		MainController.save();
+		return true;
+	}
+
+	public static double getValorTotalLocacao(Locacao locacao) {
+		double valor = locacao.getReserva().getValorTarifaDiaria();
+
+		long milissegundosInicial = locacao.getDataHoraRetirada().getTime();
+		long milissegundosFinal = locacao.getDataHoraDevolucao().getTime();
+		long diferencaMilissegundos = milissegundosFinal - milissegundosInicial;
+		long qtdDias = TimeUnit.MILLISECONDS.toDays(diferencaMilissegundos);
+
+		valor *= qtdDias;
+		return valor;
 	}
 
 }

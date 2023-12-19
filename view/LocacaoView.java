@@ -290,8 +290,7 @@ public class LocacaoView extends JFrame {
 				if (controller.addLocacao(reserva, dataInicioStr, horaInicioStr, veiculo, condutor)) {
 					verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
 				}
-				// atualizaCbbVeiculosCat(controller.getReserva(reserva).getCategoria().getVeiculosDisponiveis());
-
+				
 			} catch (ParseException e) {
 				verificacoes.Verificacoes.exibirPopup("Erro", "Hora inválida! Insira como: hh:mm");
 				return;

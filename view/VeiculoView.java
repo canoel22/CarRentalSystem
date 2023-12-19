@@ -202,7 +202,7 @@ public class VeiculoView extends JFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actionSalvar();
-				}
+			}
 		});
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -233,7 +233,7 @@ public class VeiculoView extends JFrame {
 		formPane.add(btnCancelar);
 	}
 
-	private void actionSalvar () {
+	private void actionSalvar() {
 		CatalogoController controller = MainController.getCatalogoController();
 
 		try {
@@ -265,8 +265,9 @@ public class VeiculoView extends JFrame {
 					return;
 				}
 
-				controller.addVeiculo(placa, anoFabricacao, cor, quilometragem, modeloVeiculo, categoriaVeiculo);
-				verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
+				if (controller.addVeiculo(placa, anoFabricacao, cor, quilometragem, modeloVeiculo, categoriaVeiculo)) {
+					verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
+				}
 
 			} catch (NumberFormatException e) {
 				verificacoes.Verificacoes.exibirPopup("Erro",

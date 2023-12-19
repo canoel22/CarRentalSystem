@@ -57,7 +57,7 @@ public class ClienteController implements Serializable {
 		return (Cliente) pessoasJuridicas.get(CPF_CNPJ);
 	}
 
-	public void addPessoaFisica(String nome, String email, long telefone, Endereco endereco, long cpf, long cnh,
+	public boolean addPessoaFisica(String nome, String email, long telefone, Endereco endereco, long cpf, long cnh,
 			Date valCNH) {
 
 		PessoaFisica pessoa = new PessoaFisica(cpf, cnh, valCNH, nome, telefone, email, endereco);
@@ -65,6 +65,7 @@ public class ClienteController implements Serializable {
 		pessoasFisicas.put(pessoa.getCpf(), pessoa);
 
 		MainController.save();
+		return true;
 	}
 
 	public List<String> getPessoasFisicas() {
@@ -76,7 +77,7 @@ public class ClienteController implements Serializable {
 		return lista;
 	}
 
-	public void addPessoaJuridica(String nome, String email, long telefone, Endereco endereco, long cnpj,
+	public boolean addPessoaJuridica(String nome, String email, long telefone, Endereco endereco, long cnpj,
 			String contato) {
 
 		PessoaJuridica pessoa = new PessoaJuridica(cnpj, contato, nome, telefone, email, endereco);
@@ -84,6 +85,7 @@ public class ClienteController implements Serializable {
 		pessoasJuridicas.put(pessoa.getCnpj(), pessoa);
 
 		MainController.save();
+		return true;
 	}
 
 	public List<String> getPessoasJuridicas() {

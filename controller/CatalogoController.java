@@ -34,21 +34,23 @@ public class CatalogoController implements Serializable {
 		seguros = new TreeMap<>();
 	}
 
-	public void addModelo(String nome, int anoModelo, String fabricante) {
+	public boolean addModelo(String nome, int anoModelo, String fabricante) {
 		modelos.put(nome, new Modelo(nome, anoModelo, fabricante)); // insere novo objeto categoria no map modelos
 		MainController.save();
+		return true;
 	}
 
 	public Set<String> getModelos() {
 		return modelos.keySet(); // retorna lista das chaves do map modelos
 	}
 
-	public void addCategoria(String nome, double tarifaDiaria) {
+	public boolean addCategoria(String nome, double tarifaDiaria) {
 		if (categorias == null) {
 			categorias = new TreeMap<>();
 		}
 		categorias.put(nome, new Categoria(nome, tarifaDiaria)); // insere novo objeto categoria no map modelos
 		MainController.save();
+		return true;
 	}
 
 	public Set<String> getCategorias() {
@@ -62,7 +64,7 @@ public class CatalogoController implements Serializable {
 		return categorias.get(nome);
 	}
 
-	public void addSeguro(String descricao, int percentualTarifa, String categoria) {
+	public boolean addSeguro(String descricao, int percentualTarifa, String categoria) {
 		if (seguros == null) {
 			seguros = new TreeMap<>();
 		}
@@ -77,6 +79,7 @@ public class CatalogoController implements Serializable {
 			categoria1.addSeguro(seguro);
 
 		MainController.save();
+		return true;
 	}
 
 	public double getTarifa(String nomeCategoria) {
@@ -138,7 +141,7 @@ public class CatalogoController implements Serializable {
 
 	}
 
-	public void addVeiculo(String placa, int anoFabricacao, String cor, int quilometragem, String modelo,
+	public boolean addVeiculo(String placa, int anoFabricacao, String cor, int quilometragem, String modelo,
 			String categoria) {
 
 		if (veiculos == null) {
@@ -162,6 +165,7 @@ public class CatalogoController implements Serializable {
 			categoria1.addVeiculo(veiculo);
 
 		MainController.save();
+		return true;
 	}
 
 

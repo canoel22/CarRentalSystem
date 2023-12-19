@@ -50,7 +50,6 @@ public class CadastroModeloView extends JFrame {
 		txtNome = new JTextField();
 		txtNome.setBounds(85, 0, 213, 26);
 		txtNome.setColumns(20);
-		
 
 		lblanoModelo = new JLabel("Ano do modelo:");
 		lblanoModelo.setBounds(6, 30, 176, 16);
@@ -58,16 +57,14 @@ public class CadastroModeloView extends JFrame {
 		txtanoModelo = new JTextField();
 		txtanoModelo.setBounds(122, 30, 176, 26);
 		txtanoModelo.setColumns(20);
-		
-		
+
 		lblFabricante = new JLabel("Fabricante:");
 		lblFabricante.setBounds(6, 60, 117, 16);
 
 		txtFabricante = new JTextField();
 		txtFabricante.setBounds(98, 60, 200, 26);
 		txtFabricante.setColumns(20);
-		
-		
+
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.setBounds(310, 24, 117, 29);
 
@@ -114,18 +111,18 @@ public class CadastroModeloView extends JFrame {
 				verificacoes.Verificacoes.exibirPopup("Erro", "Ano inválido!");
 				return;
 			}
-			
+
 			String fabricante = txtFabricante.getText();
-			
+
 			if (!verificacoes.Verificacoes.verificarCamposPreenchidos(nome, fabricante)) {
 				verificacoes.Verificacoes.exibirPopup("Erro", "Por favor, preencha todos os campos.");
 				return;
 			}
-	
-			controller.addModelo(nome, anoModelo, fabricante);
-			verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
 
-			
+			if (controller.addModelo(nome, anoModelo, fabricante)) {
+				verificacoes.Verificacoes.exibirPopupSucesso("Sucesso", "Cadastro realizado com sucesso!");
+			}
+
 		} catch (NumberFormatException e) {
 			verificacoes.Verificacoes.exibirPopup("Erro", "O ano informado nao é válido, digite somente números");
 			return;
